@@ -6,8 +6,6 @@ Application developed with Angular 16 for product management with a user comment
 - Angular 16
 - Bootstrap 5
 - TypeScript
-- JSON Server (for development)
-- RxJS (for state management)
 
 ## Main Views
 
