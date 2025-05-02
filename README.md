@@ -1,2 +1,2 @@
-# exp-seq-auth-api-web
+# product-manage-web
 El frontend del api
