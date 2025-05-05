@@ -1,27 +1,46 @@
-# ProductManageWeb
+# product-manage-web
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.16.
+Application developed with Angular 16 for product management with a user commenting system. Uses Bootstrap 5 for styling and UI components.
 
-## Development server
+## Core Technologies
+- Angular 16
+- Bootstrap 5
+- TypeScript
 
+## Main Views
+
+### Authentication View
+Login and registration screen where users can create an account or access the system. Includes form validation and credential handling.
+
+### Profile View
+Personal area where each user can:
+- View their published products
+- Check their posted comments
+- Edit personal information (name, email and password)
+
+### Product Listing View
+Displays all available products in card format showing:
+- Product name
+- Price
+- Average rating
+- Main image
+
+Includes:
+- Name search functionality
+- Price and rating filters
+- Pagination for better performance
+
+### Product Detail View
+Full-screen display with complete product information:
+- Full description
+- Exact price
+- Seller information
+- Publication date
+
+Comments section featuring:
+- List of all comments
+- Form to add new comments (requires authentication)
+- 5-star rating system
+
+## Run app
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
