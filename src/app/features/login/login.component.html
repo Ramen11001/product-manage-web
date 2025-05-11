@@ -1,22 +1,23 @@
-<div name="complete" class="complete"> 
-<div name="head">
-<h1 name="log">Login</h1>
-<p name="primer">mi primer formulario</p>
-</div>
+<div class="body"> 
+<div class="login-container">
+    <div class="profile-icon">
+        <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="User Icon">
+    </div>
 
-<div name="formulario" class="name"> 
-<form [formGroup]="loginForm">
-    <input type="text" name="username" placeholder="Introduzca su nombre de usuario">
-    <input type="password" name="password" placeholder="Introduzca su contraseña">
-</form>
-</div>
+    <form [formGroup]="loginForm">
+        <input type="text" class="input-field" placeholder="Introduzca su nombre de usuario" required>
+        <input type="password" class="input-field" placeholder="Introduzca su contraseña" required>
+    </form>
 
-<div name="bot log">
-<p name="pass">Olvidaste la contraseña?</p>
-<button name="logg">Login</button>
-</div>
+    <div class="options">
+        <div>
+            <a href="#">Olvidaste la contraseña?</a>
+        </div>
+    </div>
+    <button type="submit" class="login-btn">LOGIN</button>
 
-<div name="red soc">
-    <p name="follow">Síguenos en:</p>
+    <div class="footer">
+        Mi primera api mi gente :3
+    </div>
 </div>
 </div>
