@@ -10,7 +10,7 @@ export class AuthService {
   private http = inject(HttpClient)
 
   login(user: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}/login`, user);
+    return this.http.post(`${this.baseUrl}/auth/login`, user);
   }
 
   logout() {
@@ -26,3 +26,4 @@ export class AuthService {
     return !!token; // Cheek if token exist
   }
 }
+//Necesito hacer una función para localStorage, por qué me está haciendo la petición 2 veceses

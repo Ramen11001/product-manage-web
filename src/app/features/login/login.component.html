@@ -1,12 +1,13 @@
-<div class="body"> 
+<div class="body h-10 d-flex justify-content-center"> 
 <div class="login-container">
     <div class="profile-icon">
         <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="User Icon">
     </div>
 
     <form [formGroup]="loginForm">
-        <input type="text" class="input-field" placeholder="Introduzca su nombre de usuario" required>
-        <input type="password" class="input-field" placeholder="Introduzca su contraseña" required>
+        <input type="text" formControlName="username" name="username"  class="input-field" placeholder="Introduzca su nombre de usuario" required>
+        <input type="password" formControlName="password" name="password" class="input-field" placeholder="Introduzca su contraseña" required>
+     <button type="submit" class="login-btn" (click)="submit()">Inicio</button>
     </form>
 
     <div class="options">
@@ -14,10 +15,10 @@
             <a href="#">Olvidaste la contraseña?</a>
         </div>
     </div>
-    <button type="submit" class="login-btn">LOGIN</button>
+   
 
     <div class="footer">
-        Mi primera api mi gente :3
+        Mi primera web mi gente :3
     </div>
 </div>
 </div>

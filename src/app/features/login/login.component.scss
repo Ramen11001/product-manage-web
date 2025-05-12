@@ -1,7 +1,4 @@
 .body {
-    margin: 0;
-    display: flex;
-    justify-content: center;
     align-items: center;
     height: 100vh;
     font-family: Arial, sans-serif;
@@ -17,14 +14,14 @@
   }
 
 .login-container {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.247);
     backdrop-filter: blur(10px);
     border-radius: 15px;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     width: 350px;
     padding: 30px;
     text-align: center;
-    color: white;
+    /* color: white; */
 }
 
 form {
@@ -57,13 +54,13 @@ form {
     margin: 10px 0;
     padding: 10px 20px;
     font-size: 14px;
-    color: white;
+    color: rgb(99, 14, 104); 
     width: 100%;
     outline: none;
 }
 
 ::placeholder {
-    color: rgba(255, 255, 255, 0.7);
+   color: rgb(99, 14, 104);
 }
 
 .options {
@@ -78,7 +75,7 @@ form {
 }
 
 .options a {
-    color: rgba(255, 255, 255, 0.7);
+   color: rgb(99, 14, 104);
     text-decoration: none;
 }
 
@@ -102,7 +99,7 @@ form {
 .footer {
     margin-top: 20px;
     font-size: 12px;
-    color: rgba(255, 255, 255, 0.7);
+   color: rgb(99, 14, 104);
 }
 
 .footer a {

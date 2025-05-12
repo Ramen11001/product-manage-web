@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { FormGroup, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
-import {AuthService } from 'src/app/core/services/api.service';
+import {AuthService } from 'src/app/core/services/auth.service';
 @Component({
   selector: 'app-login',
   standalone: true,
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
-  imports: [ReactiveFormsModule]
+  imports: [CommonModule ,ReactiveFormsModule]
 })
 
 export class LoginComponent {
@@ -18,10 +19,13 @@ export class LoginComponent {
   constructor(private authService: AuthService) { }
 
   submit() {
+    console.log("ejecutando");
     if (this.loginForm.valid) {
+      console.log("ejecutando 1");
       this.authService.login(this.loginForm.value).subscribe({
         next: (response: any) => { 
           localStorage.setItem('token', response.token);
+          console.log("ejecutando 2");
         },
         error :(error: any) => { 
           console.error('Error en autenticación:', error);
