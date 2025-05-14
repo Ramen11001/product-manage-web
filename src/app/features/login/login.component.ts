@@ -2,6 +2,10 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormGroup, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import {AuthService } from 'src/app/core/services/auth.service';
+import * as CryptoJS from 'crypto-js';
+
+
+
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -20,15 +24,20 @@ export class LoginComponent {
 
   submit() {
    console.log("El botón fue presionado.");
-
   if (!this.loginForm.valid) {
     console.log("El formulario no es válido.");
     return;
   }
 
-  console.log("Ejecutando login con:", this.loginForm.value); // 👀 Verifica los datos enviados
+ const password = this.loginForm.value.password ?? ''; // Evita valores `null`
+  const encryptedPassword = CryptoJS.MD5(password).toString();
+  const loginData = {
+    username: this.loginForm.value.username,
+    password: encryptedPassword
+  };
+  
 
-  this.authService.login(this.loginForm.value).subscribe({
+  this.authService.login(loginData).subscribe({
     next: (response) => { 
       console.log("Login exitoso, token recibido:", response.token);
       localStorage.setItem('token', response.token);
