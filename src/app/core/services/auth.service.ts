@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthService {
-  private baseUrl = 'http://localhost:3000/api';
+  private baseUrl = 'http://localhost:3000';
   private http = inject(HttpClient)
 
   login(user: any): Observable<any> {
@@ -26,4 +26,3 @@ export class AuthService {
     return !!token; // Cheek if token exist
   }
 }
-//Necesito hacer una función para localStorage, por qué me está haciendo la petición 2 veceses

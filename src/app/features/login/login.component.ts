@@ -19,18 +19,23 @@ export class LoginComponent {
   constructor(private authService: AuthService) { }
 
   submit() {
-    console.log("ejecutando");
-    if (this.loginForm.valid) {
-      console.log("ejecutando 1");
-      this.authService.login(this.loginForm.value).subscribe({
-        next: (response: any) => { 
-          localStorage.setItem('token', response.token);
-          console.log("ejecutando 2");
-        },
-        error :(error: any) => { 
-          console.error('Error en autenticación:', error);
-        }
-      });
+   console.log("El botón fue presionado.");
+
+  if (!this.loginForm.valid) {
+    console.log("El formulario no es válido.");
+    return;
+  }
+
+  console.log("Ejecutando login con:", this.loginForm.value); // 👀 Verifica los datos enviados
+
+  this.authService.login(this.loginForm.value).subscribe({
+    next: (response) => { 
+      console.log("Login exitoso, token recibido:", response.token);
+      localStorage.setItem('token', response.token);
+    },
+    error: (error) => { 
+      console.error('Error en autenticación:', error);
     }
+  });
   }
 }
