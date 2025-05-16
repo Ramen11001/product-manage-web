@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 import { LoginComponent } from './features/login/login.component';
 import { DashboardComponent } from './features/dashboard/dashboard.component';
-import { AuthGuard } from './core/guards/auth.guard';
+import { authGuard } from './core/guards/auth.guard';
 /**
  * Defines the application routes and their associated components.
  *
@@ -38,6 +38,6 @@ export const routes: Routes = [
   {
     path: 'dashboard',
     component: DashboardComponent,
-    canActivate: [AuthGuard],
+    canActivate: [authGuard],
   },
 ];

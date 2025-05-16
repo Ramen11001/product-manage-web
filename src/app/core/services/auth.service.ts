@@ -69,4 +69,5 @@ export class AuthService {
     const token = this.getToken();
     return !!token; // Cheek if token exist
   }
+
 }

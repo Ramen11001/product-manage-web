@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { CanActivate, Router } from '@angular/router';
+import { CanActivateFn, Router } from '@angular/router';
+import { inject } from '@angular/core';
 import { AuthService } from 'src/app/core/services/auth.service';
 /**
  * Guard responsible for controlling access to protected routes.
@@ -7,23 +7,12 @@ import { AuthService } from 'src/app/core/services/auth.service';
  *
  * @service
  * @class AuthGuard
- * @implements {CanActivate}
+ * @implements {CanActivateFn}
  */
-@Injectable({
-  providedIn: 'root',
-})
-export class AuthGuard implements CanActivate {
-  /**
-   * Initializes AuthGuard with authentication and routing services.
-   *
-   * @constructor
-   * @param {AuthService} authService - Service handling authentication logic.
-   * @param {Router} router - Handles navigation between routes.
-   */
-  constructor(
-    private authService: AuthService,
-    private router: Router,
-  ) {}
+export const authGuard: CanActivateFn = (route, state) => {
+  const authService = inject(AuthService);
+  const router = inject(Router);
+
   /**
    * Determines if the route can be activated based on user authentication.
    * - If the user has a valid token, access is granted.
@@ -32,13 +21,11 @@ export class AuthGuard implements CanActivate {
    * @function
    * @returns {boolean} - Returns `true` if the user is authenticated, otherwise `false`.
    */
-  canActivate(): boolean {
-    const token = this.authService.getToken();
-    if (token) {
-      return true;
-    } else {
-      this.router.navigate(['/login']);
-      return false;
-    }
+  const token = authService.getToken();
+  if (token) {
+    return true;
+  } else {
+    router.navigate(['/login']);
+    return false;
   }
-}
+};

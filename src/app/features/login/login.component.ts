@@ -7,7 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { AuthService } from 'src/app/core/services/auth.service';
-import * as CryptoJS from 'crypto-js';
+import * as md5 from 'md5';
 import { Router } from '@angular/router';
 
 /**
@@ -85,7 +85,7 @@ export class LoginComponent {
     }
     // Encrypt the password using MD5
     const password = this.loginForm.value.password ?? '';
-    const encryptedPassword = CryptoJS.MD5(password).toString();
+    const encryptedPassword = md5(password).toString();
 
     // Prepare login data object
     const loginData = {
@@ -103,7 +103,6 @@ export class LoginComponent {
        * @param {object} response - The server's response containing the token.
        */
       next: (response) => {
-        console.log('Login exitoso, token recibido:', response.token);
         localStorage.setItem('token', response.token);
         this.router.navigate(['/dashboard']);
         this.loading = false;
