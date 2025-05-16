@@ -1,24 +1,46 @@
-<div class="body h-10 d-flex justify-content-center"> 
-<div class="login-container">
-    <div class="profile-icon">
-        <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="User Icon">
+<div class="body">
+<div class="container d-flex justify-content-center align-items-center vh-100">
+  <div class="card bg-light shadow-lg p-4 rounded-4 border border-purple" style="max-width: 400px; width: 100%;">
+    
+    <!-- Ícono de usuario -->
+    <div class="d-flex justify-content-center mb-3">
+      <i class="bi bi-person-circle display-4 text-purple"></i>
     </div>
 
-    <form [formGroup]="loginForm">
-        <input type="text" formControlName="username" name="username"  class="input-field" placeholder="Introduzca su nombre de usuario" required>
-        <input type="password" formControlName="password" name="password" class="input-field" placeholder="Introduzca su contraseña" required>
-     <button type="button" class="login-btn" (click)="submit()">Inicio</button>
+    <!-- Formulario con Bootstrap -->
+    <form [formGroup]="loginForm" class="d-flex flex-column gap-3">
+      <div class="form-group">
+        <input type="text" formControlName="username" class="form-control rounded-pill border-purple text-purple placeholder-purple" placeholder="Nombre de usuario" required>
+      </div>
+      <div class="form-group">
+        <input type="password" formControlName="password" class="form-control rounded-pill border-purple text-purple placeholder-purple" placeholder="Contraseña" required>
+      </div>
+      <button type="button" class="btn btn-purple w-100 rounded-pill fw-bold shadow-lg" (click)="submit()">Iniciar sesión</button>
     </form>
 
-    <div class="options">
-        <div>
-            <a href="#">Olvidaste la contraseña?</a>
-        </div>
+    <!-- Opciones adicionales -->
+    <div class="text-center mt-3">
+      <a href="#" class="text-decoration-none text-purple fw-bold">¿Olvidaste tu contraseña?</a>
     </div>
-   
 
-    <div class="footer">
-        Mi primera web mi gente :3
+    <!-- Indicador de carga -->
+    <div *ngIf="loading" class="text-center mt-3">
+      <div class="spinner-border text-purple" role="status">
+        <span class="visually-hidden">Cargando...</span>
+      </div>
     </div>
+
+    <!-- Mensaje de error -->
+    <div *ngIf="errorMessage" class="alert alert-danger mt-3">
+      {{ errorMessage }}
+    </div>
+
+    <!-- Footer -->
+    <div class="text-center mt-3 text-purple fw-bold">
+      Mi primera web mi gente :3
+    </div>
+  </div>
 </div>
-</div>
+
+
+ </div>
