@@ -17,3 +17,27 @@
     background-position: 0% 50%;
   }
 }
+
+.test {
+  background: linear-gradient(135deg, #a18cd1, #fbc2eb);
+  @keyframes gradientBG {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+}
+
+.butt {
+  background: rgb(255, 255, 255);
+}
+
+.test2 {
+  max-width: 400px;
+  width: 100%;
+}
