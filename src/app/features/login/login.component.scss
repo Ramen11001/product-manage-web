@@ -18,7 +18,7 @@
   }
 }
 
-.test {
+.card_background {
   background: linear-gradient(135deg, #a18cd1, #fbc2eb);
   @keyframes gradientBG {
     0% {
@@ -33,11 +33,12 @@
   }
 }
 
-.butt {
+.button_additional_settings {
   background: rgb(255, 255, 255);
+  border-color: #a18cd1;
 }
 
-.test2 {
+.card_additional_settings{
   max-width: 400px;
   width: 100%;
 }

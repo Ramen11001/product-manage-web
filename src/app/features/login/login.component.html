@@ -1,12 +1,12 @@
 <div class="body">
   <div class="container d-flex justify-content-center align-items-center h-100">
     <div
-      class="test2 card bg-light shadow-lg p-4 rounded-4 border border-purple test"
+      class="card_additional_settings card bg-light shadow-lg p-4 rounded-4 border card_background"
     >
       <h4 class="d-flex justify-content-center">Product Manage</h4>
       <!-- Ícono de usuario -->
       <div class="d-flex justify-content-center mb-3">
-        <i class="bi bi-person-circle display-4 text-purple"></i>
+        <i class="bi bi-person-circle display-4 "></i>
       </div>
 
       <!-- Formulario con Bootstrap -->
@@ -16,7 +16,7 @@
             type="text"
             formControlName="username"
             [class.isInvalid]="loginForm.get('username')?.invalid"
-            class="form-control rounded-pill border-purple text-purple placeholder-purple"
+            class="form-control rounded-pill  "
             placeholder="Nombre de usuario"
             required
           />
@@ -25,14 +25,14 @@
           <input
             type="password"
             formControlName="password"
-            class="form-control rounded-pill border-purple text-purple placeholder-purple"
+            class="form-control rounded-pill  "
             placeholder="Contraseña"
             required
           />
         </div>
         <button
           type="button"
-          class="btn w-100 rounded-pill fw-bold shadow-lg butt"
+          class="button_additional_settings w-100 rounded-pill fw-bold shadow-lg "
           (click)="submit()"
         >
           Iniciar sesión
