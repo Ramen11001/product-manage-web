@@ -1,0 +1,44 @@
+.body {
+  height: 100vh;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #a18cd1, #fbc2eb);
+  background-size: 400% 400%;
+  animation: gradientBG 6s ease infinite;
+}
+
+@keyframes gradientBG {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.card_background {
+  background: linear-gradient(135deg, #a18cd1, #fbc2eb);
+  @keyframes gradientBG {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+}
+
+.button_additional_settings {
+  background: rgb(255, 255, 255);
+  border-color: #a18cd1;
+}
+
+.card_additional_settings{
+  max-width: 400px;
+  width: 100%;
+}

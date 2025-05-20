@@ -28,6 +28,7 @@ yarn-error.log
 !.vscode/extensions.json
 .history/*
 .editorconfig
+.vscode
 
 # Miscellaneous
 /.angular/cache
@@ -41,3 +42,6 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+
+# Angular
+/.angular
