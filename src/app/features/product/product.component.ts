@@ -5,6 +5,8 @@ import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { environment } from 'src/environments/environment';
 
+
+
 interface Producto {
   id: number;
   name: string;
@@ -44,8 +46,10 @@ export class ProductComponent implements OnInit {
       pagina: this.paginaActual
     };
 
+//TIENES QUE ENVIAR EL TOKENNNNNNNNNNNNNNNNN
     this.http.get<{ productos: Producto[], totalPaginas: number }>(`${environment.baseUrl}/products`, { params })
       .subscribe(response => {
+        //necesito antes que todo obtener el token
         this.productos = response.productos;
         this.totalPaginas = response.totalPaginas;
       });

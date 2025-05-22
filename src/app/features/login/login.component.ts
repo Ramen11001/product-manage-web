@@ -1,3 +1,4 @@
+//DESPUÉS DE AUTENTICARME, NO ME LLEVA AL PRODUCT
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
@@ -50,7 +51,7 @@ export class LoginComponent {
   });
 
   /**
-   * Initializes LoginComponent and redirects authenticated users to the dashboard.
+   * Initializes LoginComponent and redirects authenticated users to the product view.
    *
    * @constructor
    * @param {AuthService} authService - Handles authentication-related requests.
@@ -62,7 +63,7 @@ export class LoginComponent {
   ) {
     const token = this.authService.getToken();
     if (token) {
-      this.router.navigate(['/dashboard']);
+      this.router.navigate(['/product']);
     }
   }
 
@@ -97,14 +98,14 @@ export class LoginComponent {
       /**
        * Executes when login is successful.
        * - Stores the token in local storage.
-       * - Redirects the user to the dashboard.
+       * - Redirects the user to the product.
        *
        * @callback
        * @param {object} response - The server's response containing the token.
        */
       next: (response) => {
         localStorage.setItem('token', response.token);
-        this.router.navigate(['/dashboard']);
+        this.router.navigate(['/product']);
         this.loading = false;
       },
       /**
