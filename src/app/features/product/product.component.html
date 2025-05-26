@@ -1,30 +1,126 @@
-<!-- REVISAR ROW Y COL-->
 <div class="body">
-  <div
-    class="header d-flex justify-content-between align-items-center gap-2 p-2"
-  >
-    <!-- Imagen -->
-    <div>
-      <img
-        src="..."
-        alt="..."
-        class="img-thumbnail"
-        style="width: 80px; height: 80px"
-      />
-    </div>
+  <div class="container-fluid">
+    <!-- Header -->
+    <header class="bg-light border-bottom shadow-sm">
+      <div class="d-flex justify-content-between align-items-center px-4 py-2">
+        <!-- Logo -->
+        <div>
+          <img
+            src="https://via.placeholder.com/100x40"
+            alt="Logo"
+            class="img-fluid"
+          />
+        </div>
 
-    <!-- Login -->
-    <div class="user_login_path d-flex align-items-center gap-2">
-      <i class="bi bi-person-circle display-4"></i>
-      <a href="#" class="fw-bold text-primary">Login</a>
-      <!-- que el icon me quede dentro, arreglar -->
-    </div>
-  </div>
+        <!-- Navigation -->
+        <nav class="d-flex align-items-center gap-4">
+          <a href="#" class="text-dark text-decoration-none">SuperOfertas</a>
+          <a href="#" class="text-dark text-decoration-none">Moda mujer</a>
+          <a href="#" class="text-dark text-decoration-none">Moda hombre</a>
+          <a href="#" class="text-dark text-decoration-none">Accesorios</a>
+          <a href="#" class="text-dark text-decoration-none">Electrónica</a>
+          <a href="#" class="text-dark text-decoration-none">Más</a>
+        </nav>
 
-  <div>
-    <!-- Products Cards -->
+        <!-- User Options -->
+        <div class="d-flex align-items-center gap-3">
+          <a href="#" class="text-dark text-decoration-none">
+            <i class="bi bi-person-circle fs-4"></i> Identifícate
+          </a>
+          <button class="btn btn-outline-dark">
+            <i class="bi bi-cart"></i> Cesta
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Banner -->
+    <section
+      style="background-color: rgb(124, 13, 124); border-color: rgb(110, 0, 110);"
+      class="text-white position-relative border"
+    >
+      <div class="row align-items-center mx-0">
+        <div class="col-md-6">
+          <div class="p-5">
+            <h2 class="fw-bold">Dto. Bienvenida</h2>
+            <p>Especial para nuevos usuarios</p>
+            <button
+              class="btn text-white fw-bold"
+              style="background-color: rgb(124, 13, 124); border-color: rgb(110, 0, 110);"
+            >
+              Comprar
+            </button>
+          </div>
+        </div>
+        <div class="col-md-6 position-relative">
+          <div class="d-flex justify-content-around align-items-center">
+            <div
+              class="card border"
+              style="background-color: rgb(124, 13, 124); border-color: rgb(110, 0, 110);"
+            >
+              <img
+                src="https://via.placeholder.com/200"
+                class="card-img-top rounded"
+                alt="Producto 1"
+              />
+              <div
+                class="card-img-overlay text-center text-white border"
+                style="background-color: rgb(124, 13, 124); border-color: rgb(110, 0, 110);"
+              >
+                <span
+                  class="badge fs-5"
+                  style="background-color: rgb(124, 13, 124); border-color: rgb(110, 0, 110);"
+                >
+                  -62%
+                </span>
+              </div>
+            </div>
+            <div
+              class="card border"
+              style="background-color: rgb(124, 13, 124); border-color: rgb(110, 0, 110);"
+            >
+              <img
+                src="https://via.placeholder.com/200"
+                class="card-img-top rounded"
+                alt="Producto 2"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Information Section -->
+    <section class="bg-light py-3 text-center">
+      <div class="d-flex justify-content-around">
+        <div>
+          <i
+            class="bi bi-truck fs-3 text-white p-2 rounded"
+            style="background-color: rgb(124, 13, 124); border: 2px solid rgb(110, 0, 110);"
+          ></i>
+          <p class="mb-0">Envío gratis</p>
+        </div>
+        <div>
+          <i
+            class="bi bi-arrow-repeat fs-3 text-white p-2 rounded"
+            style="background-color: rgb(124, 13, 124); border: 2px solid rgb(110, 0, 110);"
+          ></i>
+          <p class="mb-0">Reembolso por fallos</p>
+        </div>
+        <div>
+          <i
+            class="bi bi-shield-check fs-3 text-white p-2 rounded"
+            style="background-color: rgb(124, 13, 124); border: 2px solid rgb(110, 0, 110);"
+          ></i>
+          <p class="mb-0">Devoluciones gratis</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Products Section -->
     <h3 class="title text-center">Ofertas</h3>
-    <!-- Filtros -->
+
+    <!-- Filters -->
     <div class="d-flex justify-content-center gap-3 my-3">
       <input
         type="text"
@@ -45,23 +141,25 @@
         placeholder="Precio máximo"
       />
 
-      <!-- Botón con ícono dentro -->
+      <!-- Search Button -->
       <button
-        class="btn btn-primary fw-bold d-flex align-items-center gap-2"
+        class="btn text-white fw-bold d-flex align-items-center gap-2"
+        style="background-color: rgb(124, 13, 124); border-color: rgb(110, 0, 110);"
         (click)="obtenerProductos()"
       >
         <i class="bi bi-search"></i> Buscar
-        
       </button>
     </div>
 
-    <div
-      class="row row-cols-4 align-items-start"
-    >
-    <ng-container *ngFor="let producto of productos">
-      <div class="card col-md-4">
+    <!-- Product Cards -->
+    <div class="card-deck d-flex justify-content-center align-items-center h-100">
+      <div
+        class="card border"
+        *ngFor="let producto of productos"
+        style="background-color: rgb(124, 13, 124); border-color: rgb(110, 0, 110);"
+      >
         <img class="card-img-top" src="..." alt="Imagen del producto" />
-        <div class="card-body">
+        <div class="card-body text-white">
           <h5 class="card-title">{{ producto.name }}</h5>
           <p class="card-text">
             {{
@@ -75,36 +173,14 @@
         <div class="card-footer">
           <small class="text-muted">Puntuación: ★a★★★★</small>
         </div>
-        <a href="#" class="btn btn-primary">Ver detalles</a>
+        <a
+          href="#"
+          class="btn text-white fw-bold"
+          style="background-color: rgb(124, 13, 124); border-color: rgb(110, 0, 110);"
+        >
+          Ver detalles
+        </a>
       </div>
-    </ng-container>
     </div>
-  </div>
-
-  <!-- Paginación -->
-  <nav>
-    <ul class="pagination justify-content-center">
-      <li class="page-item" [class.disabled]="paginaActual === 1">
-        <a class="page-link" (click)="cambiarPagina(paginaActual - 1)"
-          >Anterior</a
-        >
-      </li>
-      <li
-        class="page-item"
-        *ngFor="let pagina of [].constructor(totalPaginas); let i = index"
-      >
-        <a class="page-link" (click)="cambiarPagina(i + 1)">{{ i + 1 }}</a>
-      </li>
-      <li class="page-item" [class.disabled]="paginaActual === totalPaginas">
-        <a class="page-link" (click)="cambiarPagina(paginaActual + 1)"
-          >Siguiente</a
-        >
-      </li>
-    </ul>
-  </nav>
-
-  <!-- Mensaje si no hay productos -->
-  <div class="text-center mt-3" *ngIf="productos.length === 0">
-    <p class="text-danger">No se encontraron productos.</p>
   </div>
 </div>

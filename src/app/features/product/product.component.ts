@@ -36,9 +36,20 @@ export class ProductComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.obtenerProductos();
+    const token = localStorage.getItem('token'); 
+    
+    if (!token) {
+      this.router.navigate(['/login']);
+    } else {
+      this.obtenerProductos(); 
+    }
   }
   obtenerProductos(): void {
+     const token = localStorage.getItem('token');
+     const headers = {
+    Authorization: `Bearer ${token}` 
+  };
+
     const params: any = {
       search: this.nombreFiltro,
       minPrecio: this.minPrecio,
@@ -47,7 +58,7 @@ export class ProductComponent implements OnInit {
     };
 
 //TIENES QUE ENVIAR EL TOKENNNNNNNNNNNNNNNNN
-    this.http.get<{ productos: Producto[], totalPaginas: number }>(`${environment.baseUrl}/products`, { params })
+    this.http.get<{ productos: Producto[], totalPaginas: number }>(`${environment.baseUrl}/products`, { params,  headers })
       .subscribe(response => {
         //necesito antes que todo obtener el token
         this.productos = response.productos;
