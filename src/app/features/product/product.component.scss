@@ -3,9 +3,9 @@
   font-family: Arial, sans-serif;
 }
 
-.btn_filter {
-  background: rgb(179, 46, 231);
-  border-color:rgb(179, 46, 231) ;
+.btn_filter, .settings1, .settings2, .settings3, .btn_settings, .banner  {
+   background-color: rgb(124, 13, 124); 
+  border-color: rgb(110, 0, 110);
 }
 .btn-primary{
   background-color: rgb(124, 13, 124);
@@ -17,5 +17,8 @@
   height: 100vh;
   font-family: Arial, sans-serif; 
 }
-//background: linear-gradient(135deg, #d4a5f0, #7147e2);
-  //background-size: 400% 400%;
+
+.button_setting_2{
+   background-color: rgb(124, 13, 124);
+  border-color: rgb(255, 255, 255) ;
+}

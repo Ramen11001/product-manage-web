@@ -61,10 +61,7 @@ export class LoginComponent {
     private authService: AuthService,
     private router: Router,
   ) {
-    const token = this.authService.getToken();
-    if (token) {
-      this.router.navigate(['/product']);
-    }
+   
   }
 
   /**
