@@ -38,7 +38,8 @@
     <section
       class="text-white position-relative border banner "
     >
-      <div class="row align-items-center mx-0">
+    <!-- NO FUNCIONA -->
+      <div class="row row-cols-1 row-cols-md-4 g-4 align-items-center mx-0">
         <div class="col-md-6">
           <div class="p-5">
             <h2 class="fw-bold">Dto. Bienvenida</h2>
@@ -136,7 +137,7 @@
       <!-- Search Button -->
       <button
         class="btn text-white fw-bold d-flex align-items-center gap-2 btn_filter"
-        (click)="obtenerProductos()"
+        (click)="getProducts()"
       >
         <i class="bi bi-search"></i> Buscar
       </button>
@@ -166,22 +167,20 @@
             Ver detalles
           </a>
            <div class="rating"> 
-            <div class="rating d-flex gap-2">
-  <input type="radio" id="star5" name="rating" value="5" hidden>
-  <label for="star5"><i class="bi bi-star-fill text-warning fs-3"></i></label>
+           
+ <div class="star-rating animated-stars">
+            <input type="radio" id="star5" name="rating" value="5">
+            <label for="star5" class="bi bi-star-fill"></label>
+            <input type="radio" id="star4" name="rating" value="4">
+            <label for="star4" class="bi bi-star-fill"></label>
+            <input type="radio" id="star3" name="rating" value="3">
+            <label for="star3" class="bi bi-star-fill"></label>
+            <input type="radio" id="star2" name="rating" value="2">
+            <label for="star2" class="bi bi-star-fill"></label>
+            <input type="radio" id="star1" name="rating" value="1">
+            <label for="star1" class="bi bi-star-fill"></label>
+        </div>
 
-  <input type="radio" id="star4" name="rating" value="4" hidden>
-  <label for="star4"><i class="bi bi-star-fill text-warning fs-3"></i></label>
-
-  <input type="radio" id="star3" name="rating" value="3" hidden>
-  <label for="star3"><i class="bi bi-star-fill text-warning fs-3"></i></label>
-
-  <input type="radio" id="star2" name="rating" value="2" hidden>
-  <label for="star2"><i class="bi bi-star-fill text-warning fs-3"></i></label>
-
-  <input type="radio" id="star1" name="rating" value="1" hidden>
-  <label for="star1"><i class="bi bi-star-fill text-warning fs-3"></i></label>
-</div>
 
           </div>
         </div>

@@ -6,23 +6,16 @@ import { FormsModule } from '@angular/forms';
 import { environment } from 'src/environments/environment';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { finalize } from 'rxjs';
-
-interface Producto {
-  id: number;
-  name: string;
-  description: string;
-  price: number;
-}
+import { ProductService } from 'src/app/core/services/product.service';
 
 @Component({
   selector: 'app-product',
   standalone: true,
   templateUrl: './product.component.html',
   styleUrls: ['./product.component.scss'],
-  imports: [CommonModule, FormsModule,],
+  imports: [CommonModule, FormsModule],
 })
 export class ProductComponent implements OnInit {
-
   productos: any = [];
   nombreFiltro: string = '';
   minPrecio: number | null = null;
@@ -32,52 +25,58 @@ export class ProductComponent implements OnInit {
   isLoading: boolean = true;
 
   authService: AuthService = inject(AuthService);
-  cdr: ChangeDetectorRef = inject(ChangeDetectorRef)
+  cdr: ChangeDetectorRef = inject(ChangeDetectorRef);
+  productService: ProductService= inject(ProductService);
 
   constructor(
     private router: Router,
-    private http: HttpClient
-  ) { }
+    private http: HttpClient,
+  ) {}
 
   ngOnInit(): void {
     const token = this.authService.getToken();
-    console.log('Token detectado:', token); if (token) {
-    this.router.navigate(['/product']);
-  }
-    
+    console.log('Token detectado:', token);
+    if (token) {
+      this.router.navigate(['/product']);
+    }
+
     if (!token) {
       this.router.navigate(['/login']);
     } else {
-      this.obtenerProductos(); 
+      this.getProducts();
     }
   }
+  
+    //Pídele ayuda a Rafa
+    //**
+    //  document.querySelectorAll('.star-rating:not(.readonly) label').forEach(star => {
+    //     star.addEventListener('click', () => {
+    //       this.style.transform = 'scale(1.2)';
+    //     setTimeout(() => {
+    //       this.style.transform = 'scale(1)';
+    // }, 200);
+    // });
+    //});
+    //  */
 
-  //service --name getProducts()
-  obtenerProductos(): void {
-     const token = localStorage.getItem('token');
-     const headers = {
-    Authorization: `Bearer ${token}` 
-  };
+    getProducts(): void {
+    this.isLoading = true; 
 
-    const params: any = {
-      search: this.nombreFiltro,
-      minPrecio: this.minPrecio,
-      maxPrecio: this.maxPrecio,
-      pagina: this.paginaActual
-    };
-
-
-    this.http.get<{ productos: Producto[], totalPaginas: number }>(`${environment.baseUrl}/products`, { params,  headers })
-      .pipe(finalize(() => {this.isLoading = false; console.log("Productos:", this.productos); }))
-      .subscribe(response => {
-     
-        this.productos = response;
-        this.totalPaginas = response.totalPaginas;
+    this.productService.getProducts(this.nombreFiltro, this.minPrecio, this.maxPrecio, this.paginaActual)
+      .pipe(finalize(() => this.isLoading = false))
+      .subscribe({
+        next: (response) => {
+          this.productos = response.productos;
+          this.totalPaginas = response.totalPaginas;
+        },
+        error: (error) => {
+          console.error("Error al obtener productos:", error);
+        }
       });
   }
 
   cambiarPagina(nuevaPagina: number): void {
     this.paginaActual = nuevaPagina;
-    this.obtenerProductos();
+    this.getProducts();
   }
 }
