@@ -44,5 +44,9 @@
     .star-rating label:hover,
     .star-rating label:hover~label,
     .star-rating input:checked~label {
-        color: #ffc107;
+        color: #9d23a1;
     }
+
+   .card_border{
+border-color: #9d23a1;
+   }

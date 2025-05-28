@@ -47,18 +47,7 @@ export class ProductComponent implements OnInit {
     }
   }
   
-    //Pídele ayuda a Rafa
-    //**
-    //  document.querySelectorAll('.star-rating:not(.readonly) label').forEach(star => {
-    //     star.addEventListener('click', () => {
-    //       this.style.transform = 'scale(1.2)';
-    //     setTimeout(() => {
-    //       this.style.transform = 'scale(1)';
-    // }, 200);
-    // });
-    //});
-    //  */
-
+    
     getProducts(): void {
     this.isLoading = true; 
 
@@ -66,7 +55,8 @@ export class ProductComponent implements OnInit {
       .pipe(finalize(() => this.isLoading = false))
       .subscribe({
         next: (response) => {
-          this.productos = response.productos;
+          console.log('Productos obtenidos:', response.productos);
+          this.productos = response;
           this.totalPaginas = response.totalPaginas;
         },
         error: (error) => {
