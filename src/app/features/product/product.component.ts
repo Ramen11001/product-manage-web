@@ -7,9 +7,6 @@ import { AuthService } from 'src/app/core/services/auth.service';
 import { finalize } from 'rxjs';
 import { ProductService } from 'src/app/core/services/product.service';
 import { Product } from 'src/app/core/interfaces/product';
-
-
-
 @Component({
   selector: 'app-product',
   standalone: true,
@@ -18,7 +15,7 @@ import { Product } from 'src/app/core/interfaces/product';
   imports: [CommonModule, FormsModule],
 })
 export class ProductComponent implements OnInit {
-  products: Product[]= [];
+  products: Product[] = [];
   filterName: string = '';
   minPrice: number | null = null;
   maxPrice: number | null = null;
@@ -28,12 +25,12 @@ export class ProductComponent implements OnInit {
 
   authService: AuthService = inject(AuthService);
   cdr: ChangeDetectorRef = inject(ChangeDetectorRef);
-  productService: ProductService= inject(ProductService);
+  productService: ProductService = inject(ProductService);
 
   constructor(
     private router: Router,
     private http: HttpClient,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     const token = this.authService.getToken();
@@ -47,35 +44,34 @@ export class ProductComponent implements OnInit {
       this.getProducts();
     }
   }
-  
-    
-    getProducts(): void {
-    this.isLoading = true; 
+  getProducts(): void {
+    this.isLoading = true;
 
     this.productService.getProducts(this.filterName, this.minPrice, this.maxPrice, this.currentPage)
       .pipe(finalize(() => this.isLoading = false))
       .subscribe({
-        next: (response) => {
-            this.products = response.products.map(product => {
-          const ratings = product.comments?.map((comment: any) => comment.rating) || [];
-          const averageRating = ratings.length > 0
-            ? ratings.reduce((sum: number, rating: number) => sum + rating, 0) / ratings.length
-            : 0;
+        next: (response: Product[]) => {
+          console.log("Respuesta de la API:", response);
 
-          return { ...product, averageRating }; 
-        });
+          this.products = response.map((product: Product) => {
+            const ratings = product.comments?.map((comment: any) => comment.rating) || [];
+            const averageRating = ratings.length > 0
+              ? ratings.reduce((sum: number, rating: number) => sum + rating, 0) / ratings.length
+              : 0;
+            return { ...product, averageRating };
 
-        console.log("Productos procesados:", this.products);
-          this.totalPages = response.totalPages;
+          });
+
         },
         error: (error) => {
           console.error("Error al obtener productos:", error);
         }
       });
-  }
 
+  }
   changePage(newPage: number): void {
     this.currentPage = newPage;
-    this.getProducts();
+    this.getProducts(); // Carga los productos de la nueva página
   }
-}
+
+} 

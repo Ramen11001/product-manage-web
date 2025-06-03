@@ -3,50 +3,49 @@
   font-family: Arial, sans-serif;
 }
 
-.btn_filter, .settings1, .settings2, .settings3, .btn_settings, .banner  {
-   background-color: rgb(124, 13, 124); 
+.btn_filter,
+.settings1,
+.settings2,
+.settings3,
+.btn_settings,
+.banner {
+  background-color: rgb(124, 13, 124);
   border-color: rgb(110, 0, 110);
 }
-.btn-primary{
+
+.btn-primary {
   background-color: rgb(124, 13, 124);
-  border-color: rgb(110, 0, 110) ;
-  color:white;
+  border-color: rgb(110, 0, 110);
+  color: white;
 }
 
-.banner_back{
+.banner_back {
   height: 100vh;
-  font-family: Arial, sans-serif; 
+  font-family: Arial, sans-serif;
 }
 
-.button_setting_2{
-   background-color: rgb(124, 13, 124);
-  border-color: rgb(255, 255, 255) ;
+.button_setting_2 {
+  background-color: rgb(124, 13, 124);
+  border-color: rgb(255, 255, 255);
 }
 
- .star-rating {
-        direction: rtl;
-        display: inline-block;
-        cursor: pointer;
-    }
 
-    .star-rating input {
-        display: none;
-    }
+.star-rating input {
+  display: none;
+}
 
-    .star-rating label {
-        color: #ddd;
-        font-size: 24px;
-        padding: 0 2px;
-        cursor: pointer;
-        transition: all 0.2s ease;
-    }
+.star-rating label {
+  color: #ddd;
+  font-size: 24px;
+  padding: 0 2px;
+  cursor: pointer;
+}
 
-    .star-rating label:hover,
-    .star-rating label:hover~label,
-    .star-rating input:checked~label {
-        color: #9d23a1;
-    }
 
-   .card_border{
-border-color: #9d23a1;
-   }
+.star-rating input:checked~label {
+  color: #9d23a1;
+}
+
+.card_border {
+  border-color: #9d23a1;
+}

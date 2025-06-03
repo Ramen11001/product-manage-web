@@ -4,29 +4,28 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Product } from 'src/app/core/interfaces/product';
 
-
-
 @Injectable({
   providedIn: 'root',
 })
 export class ProductService {
   private http = inject(HttpClient);
 
-  getProducts(filterName: string, minPrice: number | null, maxPrice: number | null, currentPage: number): Observable<{ products: Product[], totalPages: number }> {
+  getProducts(
+    filterName: string,
+    minPrice: number | null,
+    maxPrice: number | null,
+    currentPage: number
+  ): Observable<Product[]> {
     const token = localStorage.getItem('token');
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${token}`,
-    });
-
+    const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
     const params: any = {
       search: filterName,
       minPrecio: minPrice,
       maxPrecio: maxPrice,
-      page: currentPage
+      page: currentPage,
     };
 
-    return this.http.get<{ products: Product[], totalPages: number }>(
-      `${environment.baseUrl}/products`, { params, headers }
-    );
+    return this.http.get<Product[]>(`${environment.baseUrl}/products`, { params, headers });
   }
 }
+

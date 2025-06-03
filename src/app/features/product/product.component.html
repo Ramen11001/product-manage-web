@@ -1,3 +1,8 @@
+<!--
+HACER EL PAGINADO
+averageRating NO FUNCIONA
+-->
+
 <div class="body">
   <div class="container-md">
     <!-- Header -->
@@ -15,7 +20,7 @@
       <div class="row row-cols-1 row-cols-md-4 g-4 align-items-center mx-0">
         <div class="col-md-6">
           <div class="p-5">
-            <h2 class="fw-bold">Dto. Bienvenida</h2>
+            <h2 class="fw-bold">Bienvenido al Dto. </h2>
           </div>
         </div>
         <div class="col-md-6 position-relative">
@@ -24,10 +29,6 @@
         </div>
       </div>
     </section>
-
-
-    <!-- Products Section -->
-    <h3 class="title text-center">Ofertas</h3>
 
     <!-- Filters -->
     <div class="d-flex justify-content-center gap-3 my-3">
@@ -43,7 +44,7 @@
 
     <!-- Product Cards -->
     <div *ngIf="!isLoading" class="card-deck d-flex h-100 ">
-      <div class="row gy-5">
+      <div class="row ">
         <div class=" col-12 col-md-6 col-lg-4" *ngFor="let  products of products">
           <div class="card border card_border m-2">
             <img class="card-img-top" alt="Imagen del producto" />
@@ -59,20 +60,19 @@
               <p class="price"><strong>Precio:</strong> ${{ products.price }}</p>
             </div>
             <div class="card-footer">
-              <div class="rating">
-
-                <div class="star-rating animated-stars">
-                  <input type="radio" id="star5" name="rating" value="5">
-                  <label for="star5" class="bi bi-star-fill"></label>
-                  <input type="radio" id="star4" name="rating" value="4">
-                  <label for="star4" class="bi bi-star-fill"></label>
-                  <input type="radio" id="star3" name="rating" value="3">
-                  <label for="star3" class="bi bi-star-fill"></label>
-                  <input type="radio" id="star2" name="rating" value="2">
-                  <label for="star2" class="bi bi-star-fill"></label>
-                  <input type="radio" id="star1" name="rating" value="1">
-                  <label for="star1" class="bi bi-star-fill"></label>
-                </div>
+            <div class="star-rating">
+              <ng-container *ngFor="let star of [1,2,3,4,5]; let i = index">
+                <i class="bi" 
+                   [ngClass]="{
+                     'bi-star-fill': products.averageRating > i,
+                     'bi-star': products.averageRating <= i
+                   }">
+                </i>
+              </ng-container>
+              <span>{{ products.averageRating | number:'1.1-1' }}/5</span>
+            </div>
+          </div>
+        </div>
 
 
               </div>
@@ -85,10 +85,7 @@
           </div>
         </div>
       </div>
-    </div>
-  </div>
-</div>
-
+    
 
 <ng-template #loadingTemplate>
   <p>Cargando productos...</p>
