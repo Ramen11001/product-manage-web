@@ -3,10 +3,12 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-import { environment } from 'src/environments/environment';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { finalize } from 'rxjs';
 import { ProductService } from 'src/app/core/services/product.service';
+import { Product } from 'src/app/core/interfaces/product';
+
+
 
 @Component({
   selector: 'app-product',
@@ -16,12 +18,12 @@ import { ProductService } from 'src/app/core/services/product.service';
   imports: [CommonModule, FormsModule],
 })
 export class ProductComponent implements OnInit {
-  productos: any = [];
-  nombreFiltro: string = '';
-  minPrecio: number | null = null;
-  maxPrecio: number | null = null;
-  paginaActual: number = 1;
-  totalPaginas: number = 1;
+  products: Product[]= [];
+  filterName: string = '';
+  minPrice: number | null = null;
+  maxPrice: number | null = null;
+  currentPage: number = 1;
+  totalPages: number = 1;
   isLoading: boolean = true;
 
   authService: AuthService = inject(AuthService);
@@ -35,7 +37,6 @@ export class ProductComponent implements OnInit {
 
   ngOnInit(): void {
     const token = this.authService.getToken();
-    console.log('Token detectado:', token);
     if (token) {
       this.router.navigate(['/product']);
     }
@@ -51,13 +52,21 @@ export class ProductComponent implements OnInit {
     getProducts(): void {
     this.isLoading = true; 
 
-    this.productService.getProducts(this.nombreFiltro, this.minPrecio, this.maxPrecio, this.paginaActual)
+    this.productService.getProducts(this.filterName, this.minPrice, this.maxPrice, this.currentPage)
       .pipe(finalize(() => this.isLoading = false))
       .subscribe({
         next: (response) => {
-          console.log('Productos obtenidos:', response.productos);
-          this.productos = response;
-          this.totalPaginas = response.totalPaginas;
+            this.products = response.products.map(product => {
+          const ratings = product.comments?.map((comment: any) => comment.rating) || [];
+          const averageRating = ratings.length > 0
+            ? ratings.reduce((sum: number, rating: number) => sum + rating, 0) / ratings.length
+            : 0;
+
+          return { ...product, averageRating }; 
+        });
+
+        console.log("Productos procesados:", this.products);
+          this.totalPages = response.totalPages;
         },
         error: (error) => {
           console.error("Error al obtener productos:", error);
@@ -65,8 +74,8 @@ export class ProductComponent implements OnInit {
       });
   }
 
-  cambiarPagina(nuevaPagina: number): void {
-    this.paginaActual = nuevaPagina;
+  changePage(newPage: number): void {
+    this.currentPage = newPage;
     this.getProducts();
   }
 }

@@ -7,26 +7,6 @@
         <div>
           <img src="https://via.placeholder.com/100x40" alt="Logo" class="img-fluid" />
         </div>
-
-        <!-- Navigation -->
-        <nav class="d-flex align-items-center gap-4">
-          <a href="#" class="text-dark text-decoration-none">SuperOfertas</a>
-          <a href="#" class="text-dark text-decoration-none">Moda mujer</a>
-          <a href="#" class="text-dark text-decoration-none">Moda hombre</a>
-          <a href="#" class="text-dark text-decoration-none">Accesorios</a>
-          <a href="#" class="text-dark text-decoration-none">Electrónica</a>
-          <a href="#" class="text-dark text-decoration-none">Más</a>
-        </nav>
-
-        <!-- User Options -->
-        <div class="d-flex align-items-center gap-3">
-          <a href="#" class="text-dark text-decoration-none">
-            <i class="bi bi-person-circle fs-4"></i> Identifícate
-          </a>
-          <button class="btn btn-outline-dark">
-            <i class="bi bi-cart"></i> Cesta
-          </button>
-        </div>
       </div>
     </header>
 
@@ -36,56 +16,24 @@
         <div class="col-md-6">
           <div class="p-5">
             <h2 class="fw-bold">Dto. Bienvenida</h2>
-            <p>Especial para nuevos usuarios</p>
-            <button class="btn text-white fw-bold button_setting_2">
-              Comprar
-            </button>
           </div>
         </div>
         <div class="col-md-6 position-relative">
           <div class="d-flex justify-content-around align-items-center">
-            <div class="card border">
-              <img src="https://via.placeholder.com/200" class="card-img-top rounded" alt="Producto 1" />
-              <div class="card-img-overlay text-center text-white border">
-                <span class="badge fs-5">
-                  -62%
-                </span>
-              </div>
             </div>
-            <div class="card border">
-              <img src="https://via.placeholder.com/200" class="card-img-top rounded" alt="Producto 2" />
-            </div>
-          </div>
         </div>
       </div>
     </section>
 
-    <!-- Information Section -->
-    <section class="bg-light py-3 text-center">
-      <div class="d-flex justify-content-around">
-        <div>
-          <i class="bi bi-truck fs-3 text-white p-2 rounded settings1"></i>
-          <p class="mb-0">Envío gratis</p>
-        </div>
-        <div>
-          <i class="bi bi-arrow-repeat fs-3 text-white p-2 rounded settings2 "></i>
-          <p class="mb-0">Reembolso por fallos</p>
-        </div>
-        <div>
-          <i class="bi bi-shield-check fs-3 text-white p-2 rounded settings3"></i>
-          <p class="mb-0">Devoluciones gratis</p>
-        </div>
-      </div>
-    </section>
 
     <!-- Products Section -->
     <h3 class="title text-center">Ofertas</h3>
 
     <!-- Filters -->
     <div class="d-flex justify-content-center gap-3 my-3">
-      <input type="text" [(ngModel)]="nombreFiltro" class="form-control w-25" placeholder="Buscar por nombre" />
-      <input type="number" [(ngModel)]="minPrecio" class="form-control w-25" placeholder="Precio mínimo" />
-      <input type="number" [(ngModel)]="maxPrecio" class="form-control w-25" placeholder="Precio máximo" />
+      <input type="text" [(ngModel)]="filterName" class="form-control w-25" placeholder="Buscar por nombre" />
+      <input type="number" [(ngModel)]="minPrice" class="form-control w-25" placeholder="Precio mínimo" />
+      <input type="number" [(ngModel)]="maxPrice" class="form-control w-25" placeholder="Precio máximo" />
 
       <!-- Search Button -->
       <button class="btn text-white fw-bold d-flex align-items-center gap-2 btn_filter" (click)="getProducts()">
@@ -96,19 +44,19 @@
     <!-- Product Cards -->
     <div *ngIf="!isLoading" class="card-deck d-flex h-100 ">
       <div class="row gy-5">
-        <div class=" col-12 col-md-6 col-lg-4" *ngFor="let producto of productos">
+        <div class=" col-12 col-md-6 col-lg-4" *ngFor="let  products of products">
           <div class="card border card_border m-2">
             <img class="card-img-top" alt="Imagen del producto" />
             <div class="card-body text-black">
-              <h5 class="card-title">{{ producto.name }}</h5>
-              <p class="card-text">
+              <h5 class="card-title">{{ products.name }}</h5>
+              <p class="card-text text-black ">
                 {{
-                producto.description.length > 50
-                ? producto.description.substring(0, 50) + "..."
-                : producto.description
+                products.description.length > 50
+                ? products.description.substring(0, 50) + "..."
+                : products.description
                 }}
               </p>
-              <p class="price"><strong>Precio:</strong> ${{ producto.price }}</p>
+              <p class="price"><strong>Precio:</strong> ${{ products.price }}</p>
             </div>
             <div class="card-footer">
               <div class="rating">

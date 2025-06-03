@@ -2,13 +2,9 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { Product } from 'src/app/core/interfaces/product';
 
-interface Producto {
-  id: number;
-  name: string;
-  description: string;
-  price: number;
-}
+
 
 @Injectable({
   providedIn: 'root',
@@ -16,20 +12,20 @@ interface Producto {
 export class ProductService {
   private http = inject(HttpClient);
 
-  getProducts(nombreFiltro: string, minPrecio: number | null, maxPrecio: number | null, paginaActual: number): Observable<{ productos: Producto[], totalPaginas: number }> {
+  getProducts(filterName: string, minPrice: number | null, maxPrice: number | null, currentPage: number): Observable<{ products: Product[], totalPages: number }> {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`,
     });
 
     const params: any = {
-      search: nombreFiltro,
-      minPrecio: minPrecio,
-      maxPrecio: maxPrecio,
-      pagina: paginaActual
+      search: filterName,
+      minPrecio: minPrice,
+      maxPrecio: maxPrice,
+      page: currentPage
     };
 
-    return this.http.get<{ productos: Producto[], totalPaginas: number }>(
+    return this.http.get<{ products: Product[], totalPages: number }>(
       `${environment.baseUrl}/products`, { params, headers }
     );
   }
