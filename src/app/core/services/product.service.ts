@@ -14,18 +14,22 @@ export class ProductService {
     filterName: string,
     minPrice: number | null,
     maxPrice: number | null,
-    currentPage: number
+    currentPage: number,
   ): Observable<Product[]> {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
     const params: any = {
       search: filterName,
-      minPrecio: minPrice,
-      maxPrecio: maxPrice,
+     minPrecio: minPrice !== null ? minPrice : undefined,
+  maxPrecio: maxPrice !== null ? maxPrice : undefined,
       page: currentPage,
+      include: 'comments',
+      pagination: 'true',
     };
 
-    return this.http.get<Product[]>(`${environment.baseUrl}/products`, { params, headers });
+    return this.http.get<Product[]>(`${environment.baseUrl}/products`, {
+      params,
+      headers,
+    });
   }
 }
-

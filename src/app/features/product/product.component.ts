@@ -30,7 +30,7 @@ export class ProductComponent implements OnInit {
   constructor(
     private router: Router,
     private http: HttpClient,
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     const token = this.authService.getToken();
@@ -47,31 +47,37 @@ export class ProductComponent implements OnInit {
   getProducts(): void {
     this.isLoading = true;
 
-    this.productService.getProducts(this.filterName, this.minPrice, this.maxPrice, this.currentPage)
-      .pipe(finalize(() => this.isLoading = false))
+    this.productService
+      .getProducts(
+        this.filterName,
+        this.minPrice,
+        this.maxPrice,
+        this.currentPage,
+      )
+      .pipe(finalize(() => (this.isLoading = false)))
       .subscribe({
         next: (response: Product[]) => {
-          console.log("Respuesta de la API:", response);
-
+          console.log('Respuesta de la API:', response);
           this.products = response.map((product: Product) => {
-            const ratings = product.comments?.map((comment: any) => comment.rating) || [];
-            const averageRating = ratings.length > 0
-              ? ratings.reduce((sum: number, rating: number) => sum + rating, 0) / ratings.length
-              : 0;
+            const ratings =
+              product.comments?.map((comment) => comment.rating) || [];
+            const averageRating =
+              ratings.length > 0
+                ? ratings.reduce(
+                    (sum: number, rating: number) => sum + rating,
+                    0,
+                  ) / ratings.length
+                : 0;
             return { ...product, averageRating };
-
           });
-
         },
         error: (error) => {
-          console.error("Error al obtener productos:", error);
-        }
+          console.error('Error al obtener productos:', error);
+        },
       });
-
   }
   changePage(newPage: number): void {
     this.currentPage = newPage;
-    this.getProducts(); // Carga los productos de la nueva página
+    this.getProducts();
   }
-
-} 
+}

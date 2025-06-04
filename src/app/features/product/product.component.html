@@ -10,82 +10,119 @@ averageRating NO FUNCIONA
       <div class="d-flex justify-content-between align-items-center px-4 py-2">
         <!-- Logo -->
         <div>
-          <img src="https://via.placeholder.com/100x40" alt="Logo" class="img-fluid" />
+          <img
+            src="https://via.placeholder.com/100x40"
+            alt="Logo"
+            class="img-fluid"
+          />
         </div>
       </div>
     </header>
 
     <!-- Banner -->
-    <section class="text-white position-relative border banner ">
+    <section class="text-white position-relative border banner">
       <div class="row row-cols-1 row-cols-md-4 g-4 align-items-center mx-0">
         <div class="col-md-6">
           <div class="p-5">
-            <h2 class="fw-bold">Bienvenido al Dto. </h2>
+            <h2 class="fw-bold">Bienvenido al Dto.</h2>
           </div>
         </div>
         <div class="col-md-6 position-relative">
-          <div class="d-flex justify-content-around align-items-center">
-            </div>
+          <div class="d-flex justify-content-around align-items-center"></div>
         </div>
       </div>
     </section>
 
     <!-- Filters -->
     <div class="d-flex justify-content-center gap-3 my-3">
-      <input type="text" [(ngModel)]="filterName" class="form-control w-25" placeholder="Buscar por nombre" />
-      <input type="number" [(ngModel)]="minPrice" class="form-control w-25" placeholder="Precio mínimo" />
-      <input type="number" [(ngModel)]="maxPrice" class="form-control w-25" placeholder="Precio máximo" />
+      <input
+        type="text"
+        [(ngModel)]="filterName"
+        class="form-control w-25"
+        placeholder="Buscar por nombre"
+      />
+      <input
+        type="number"
+        [(ngModel)]="minPrice"
+        class="form-control w-25"
+        placeholder="Precio mínimo"
+      />
+      <input
+        type="number"
+        [(ngModel)]="maxPrice"
+        class="form-control w-25"
+        placeholder="Precio máximo"
+      />
 
       <!-- Search Button -->
-      <button class="btn text-white fw-bold d-flex align-items-center gap-2 btn_filter" (click)="getProducts()">
+      <button
+        class="btn text-white fw-bold d-flex align-items-center gap-2 btn_filter"
+        (click)="getProducts()"
+      >
         <i class="bi bi-search"></i> Buscar
       </button>
     </div>
 
     <!-- Product Cards -->
-    <div *ngIf="!isLoading" class="card-deck d-flex h-100 ">
-      <div class="row ">
-        <div class=" col-12 col-md-6 col-lg-4" *ngFor="let  products of products">
+    <div *ngIf="!isLoading" class="card-deck d-flex h-100">
+      <div class="row">
+        <div class="col-12 col-md-6 col-lg-4" *ngFor="let product of products">
           <div class="card border card_border m-2">
             <img class="card-img-top" alt="Imagen del producto" />
             <div class="card-body text-black">
-              <h5 class="card-title">{{ products.name }}</h5>
-              <p class="card-text text-black ">
+              <h5 class="card-title">{{ product.name }}</h5>
+              <p class="card-text text-black">
                 {{
-                products.description.length > 50
-                ? products.description.substring(0, 50) + "..."
-                : products.description
+                  product.description.length > 50
+                    ? product.description.substring(0, 50) + "..."
+                    : product.description
                 }}
               </p>
-              <p class="price"><strong>Precio:</strong> ${{ products.price }}</p>
+              <p class="price"><strong>Precio:</strong> ${{ product.price }}</p>
             </div>
             <div class="card-footer">
-            <div class="star-rating">
-              <ng-container *ngFor="let star of [1,2,3,4,5]; let i = index">
-                <i class="bi" 
-                   [ngClass]="{
-                     'bi-star-fill': products.averageRating > i,
-                     'bi-star': products.averageRating <= i
-                   }">
-                </i>
-              </ng-container>
-              <span>{{ products.averageRating | number:'1.1-1' }}/5</span>
-            </div>
-          </div>
-        </div>
-
-
+              <div class="star-rating">
+                <ng-container
+                  *ngFor="let star of [1, 2, 3, 4, 5]; let i = index"
+                >
+                  <i
+                    class="bi"
+                    [ngClass]="{
+                      'bi-star-fill': (product.averageRating ?? 0) > i,
+                      'bi-star': (product.averageRating ?? 0) <= i,
+                    }"
+                  ></i>
+                </ng-container>
+                <span>{{ product.averageRating | number: "1.1-1" }}/5</span>
               </div>
             </div>
-
-            <a class="btn text-white fw-bold btn_settings">
-              Ver detalles
-            </a>
-
           </div>
         </div>
       </div>
-    
+
+      <!-- Controles de paginado -->
+      <div class="d-flex justify-content-center align-items-center my-3">
+        <button
+          class="btn btn-secondary m-1"
+          [disabled]="currentPage === 1"
+          (click)="changePage(currentPage - 1)"
+        >
+          Anterior
+        </button>
+        <span class="mx-2">Página {{ currentPage }} de {{ totalPages }}</span>
+        <button
+          class="btn btn-secondary m-1"
+          [disabled]="currentPage === totalPages"
+          (click)="changePage(currentPage + 1)"
+        >
+          Siguiente
+        </button>
+      </div>
+
+      <a class="btn text-white fw-bold btn_settings"> Ver detalles </a>
+    </div>
+  </div>
+</div>
 
 <ng-template #loadingTemplate>
   <p>Cargando productos...</p>
