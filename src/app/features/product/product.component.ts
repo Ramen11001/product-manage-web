@@ -1,3 +1,4 @@
+// Import necessary modules and services for the component
 import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
@@ -7,6 +8,13 @@ import { AuthService } from 'src/app/core/services/auth.service';
 import { finalize } from 'rxjs';
 import { ProductService } from 'src/app/core/services/product.service';
 import { Product } from 'src/app/core/interfaces/product';
+
+/**
+ * Component representing the product view and functionalities.
+ *
+ * @component
+ * @class ProductComponent
+ */
 @Component({
   selector: 'app-product',
   standalone: true,
@@ -15,23 +23,68 @@ import { Product } from 'src/app/core/interfaces/product';
   imports: [CommonModule, FormsModule],
 })
 export class ProductComponent implements OnInit {
+  /**
+   * Stores the list of retrieved products.
+   * @type {Product[]}
+   */
   products: Product[] = [];
+  /**
+   * Stores the search filter for product names.
+   * @type {string}
+   */
   filterName: string = '';
+  /**
+   * Stores the minimum price filter.
+   * @type {number | null}
+   */
   minPrice: number | null = null;
+  /**
+   * Stores the maximum price filter.
+   * @type {number | null}
+   */
   maxPrice: number | null = null;
+  /**
+   * Tracks the current page in the pagination system.
+   * @type {number}
+   */
   currentPage: number = 1;
+  /**
+   * Stores the total number of pages for paginated results.
+   * @type {number}
+   */
   totalPages: number = 1;
-  isLoading: boolean = true;
+  /**
+   * Indicates whether the data is currently being fetched.
+   * @type {boolean}
+   */
 
+  /**
+   * Indicates whether the data is currently being fetched.
+   * @type {boolean}
+   */
+  isLoading: boolean = true;
+  // Dependency injection for required services
   authService: AuthService = inject(AuthService);
   cdr: ChangeDetectorRef = inject(ChangeDetectorRef);
   productService: ProductService = inject(ProductService);
 
+  /**
+   * Initializes ProductComponent and manages user authentication redirection.
+   *
+   * @constructor
+   * @param {Router} router - Manages route navigation.
+   * @param {HttpClient} http - Handles HTTP requests.
+   */
   constructor(
     private router: Router,
     private http: HttpClient,
   ) {}
 
+  /**
+   * Lifecycle hook that runs when the component is initialized.
+   * - Checks user authentication and redirects accordingly.
+   * - Fetches products if authenticated.
+   */
   ngOnInit(): void {
     const token = this.authService.getToken();
     if (token) {
@@ -44,6 +97,13 @@ export class ProductComponent implements OnInit {
       this.getProducts();
     }
   }
+
+  /**
+   * Retrieves products from the backend using search filters and pagination.
+   * - Calls `ProductService.getProducts()`.
+   * - Maps retrieved products to calculate their average rating.
+   * - Updates the `products` array.
+   */
   getProducts(): void {
     this.isLoading = true;
 
@@ -56,8 +116,15 @@ export class ProductComponent implements OnInit {
       )
       .pipe(finalize(() => (this.isLoading = false)))
       .subscribe({
+        /**
+         * Executes when the API successfully returns products.
+         * - Logs response for debugging.
+         * - Maps products to compute their average rating.
+         *
+         * @callback
+         * @param {Product[]} response - The retrieved product list.
+         */
         next: (response: Product[]) => {
-          console.log('Respuesta de la API:', response);
           this.products = response.map((product: Product) => {
             const ratings =
               product.comments?.map((comment) => comment.rating) || [];
@@ -71,11 +138,24 @@ export class ProductComponent implements OnInit {
             return { ...product, averageRating };
           });
         },
+        /**
+         * Executes when an error occurs while fetching products.
+         * - Logs the error in the console.
+         *
+         * @callback
+         * @param {any} error - Error details from the failed request.
+         */
         error: (error) => {
           console.error('Error al obtener productos:', error);
         },
       });
   }
+  /**
+   * Handles pagination by updating the current page and fetching products for the new page.
+   *
+   * @function
+   * @param {number} newPage - The page number to navigate to.
+   */
   changePage(newPage: number): void {
     this.currentPage = newPage;
     this.getProducts();
