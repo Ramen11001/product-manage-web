@@ -30,20 +30,8 @@
 }
 
 
-.star-rating input {
-  display: none;
-}
-
-.star-rating label {
-  color: #ddd;
-  font-size: 24px;
-  padding: 0 2px;
-  cursor: pointer;
-}
-
-
-.star-rating input:checked~label {
-  color: #9d23a1;
+.star-rating{
+ color: #721275;
 }
 
 .card_border {
