@@ -8,7 +8,7 @@ import { AuthService } from 'src/app/core/services/auth.service';
 import { finalize } from 'rxjs';
 import { ProductService } from 'src/app/core/services/product.service';
 import { Product } from 'src/app/core/interfaces/product';
-
+import { ReactiveFormsModule, FormGroup, FormControl } from '@angular/forms';
 /**
  * Component representing the product view and functionalities.
  *
@@ -20,7 +20,7 @@ import { Product } from 'src/app/core/interfaces/product';
   standalone: true,
   templateUrl: './product.component.html',
   styleUrls: ['./product.component.scss'],
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule],
 })
 export class ProductComponent implements OnInit {
   /**
@@ -68,6 +68,12 @@ export class ProductComponent implements OnInit {
   cdr: ChangeDetectorRef = inject(ChangeDetectorRef);
   productService: ProductService = inject(ProductService);
 
+  //Reactive Form
+  filterForm: FormGroup = new FormGroup({
+    filterName: new FormControl(''),
+    minPrice: new FormControl(null),
+    maxPrice: new FormControl(null),
+  });
   /**
    * Initializes ProductComponent and manages user authentication redirection.
    *
@@ -80,16 +86,22 @@ export class ProductComponent implements OnInit {
     private http: HttpClient,
   ) {}
 
+  /**
+   * Lifecycle hook that runs when the component is initialized.
+   * - Checks user authentication and redirects accordingly.
+   * - Fetches products if authenticated.
+   */
   ngOnInit(): void {
     const token = this.authService.getToken();
-    if (token) {
-      this.router.navigate(['/product']);
-    }
-
     if (!token) {
       this.router.navigate(['/login']);
     } else {
       this.getProducts();
+
+      this.filterForm.valueChanges.subscribe((values) => {
+        this.currentPage = 1;
+        this.getProducts();
+      });
     }
   }
 
@@ -101,14 +113,9 @@ export class ProductComponent implements OnInit {
    */
   getProducts(): void {
     this.isLoading = true;
-
+    const { filterName, minPrice, maxPrice } = this.filterForm.value;
     this.productService
-      .getProducts(
-        this.filterName,
-        this.minPrice,
-        this.maxPrice,
-        this.currentPage,
-      )
+      .getProducts(filterName, minPrice, maxPrice, this.currentPage)
       .pipe(finalize(() => (this.isLoading = false)))
       .subscribe({
         next: (response: Product[]) => {
