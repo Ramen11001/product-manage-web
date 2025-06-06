@@ -80,11 +80,6 @@ export class ProductComponent implements OnInit {
     private http: HttpClient,
   ) {}
 
-  /**
-   * Lifecycle hook that runs when the component is initialized.
-   * - Checks user authentication and redirects accordingly.
-   * - Fetches products if authenticated.
-   */
   ngOnInit(): void {
     const token = this.authService.getToken();
     if (token) {
@@ -116,14 +111,6 @@ export class ProductComponent implements OnInit {
       )
       .pipe(finalize(() => (this.isLoading = false)))
       .subscribe({
-        /**
-         * Executes when the API successfully returns products.
-         * - Logs response for debugging.
-         * - Maps products to compute their average rating.
-         *
-         * @callback
-         * @param {Product[]} response - The retrieved product list.
-         */
         next: (response: Product[]) => {
           this.products = response.map((product: Product) => {
             const ratings =
@@ -138,13 +125,6 @@ export class ProductComponent implements OnInit {
             return { ...product, averageRating };
           });
         },
-        /**
-         * Executes when an error occurs while fetching products.
-         * - Logs the error in the console.
-         *
-         * @callback
-         * @param {any} error - Error details from the failed request.
-         */
         error: (error) => {
           console.error('Error al obtener productos:', error);
         },
