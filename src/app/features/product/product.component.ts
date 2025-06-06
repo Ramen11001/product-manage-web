@@ -86,11 +86,6 @@ export class ProductComponent implements OnInit {
     private http: HttpClient,
   ) {}
 
-  /**
-   * Lifecycle hook that runs when the component is initialized.
-   * - Checks user authentication and redirects accordingly.
-   * - Fetches products if authenticated.
-   */
   ngOnInit(): void {
     const token = this.authService.getToken();
     if (!token) {
