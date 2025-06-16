@@ -39,17 +39,22 @@ export class ProductService {
     minPrice: number | null,
     maxPrice: number | null,
     currentPage: number,
+      limit: number
   ): Observable<Product[]> {
     // Retrieve authentication token from local storage
     const token = localStorage.getItem('token');
     // Configure authorization headers
     const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
+
+    const offset = (currentPage - 1) * limit;
     // Define query parameters for the API request
     const params: any = {
       search: filterName,
       minPrecio: minPrice !== null ? minPrice : undefined,
       maxPrecio: maxPrice !== null ? maxPrice : undefined,
       page: currentPage,
+       limit: limit,      
+      offset: offset,    
       include: 'comments',
       pagination: 'true',
     };

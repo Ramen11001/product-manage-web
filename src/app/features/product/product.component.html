@@ -88,24 +88,25 @@
         <p>No se encuentran productos.</p>
       </ng-template>
 
-      <!-- Controles de paginado -->
-      <div class="d-flex justify-content-center align-items-center my-3">
-        <button
-          class="btn btn-secondary m-1"
-          [disabled]="currentPage === 1"
-          (click)="changePage(currentPage - 1)"
-        >
-          Anterior
-        </button>
-        <span class="mx-2">Página {{ currentPage }} de {{ totalPages }}</span>
-        <button
-          class="btn btn-secondary m-1"
-          [disabled]="currentPage === totalPages"
-          (click)="changePage(currentPage + 1)"
-        >
-          Siguiente
-        </button>
-      </div>
+      <!-- Paging controls -->
+     <div class="d-flex justify-content-center align-items-center my-3">
+  <button
+    class="btn btn-secondary m-1"
+    [disabled]="currentPage === 1"
+    (click)="prevPage()"
+  >
+    Anterior
+  </button>
+  <span class="mx-2">Página {{ currentPage }}</span>
+  <button
+    class="btn btn-secondary m-1"
+    [disabled]="!hasMore"
+    (click)="nextPage()"
+  >
+    Siguiente
+  </button>
+</div>
+
     </div>
   </div>
 </div>

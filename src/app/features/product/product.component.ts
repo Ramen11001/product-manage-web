@@ -49,19 +49,18 @@ export class ProductComponent implements OnInit {
    */
   currentPage: number = 1;
   /**
-   * Stores the total number of pages for paginated results.
+   * Specifies the maximum number of products to display per page.
+   *
    * @type {number}
    */
-  totalPages: number = 1;
-  /**
-   * Indicates whether the data is currently being fetched.
+    itemsPerPage: number = 13;
+/**
+   * Indicates whether there are more products to fetch beyond the current page.
+   *
    * @type {boolean}
    */
+   hasMore = false;
 
-  /**
-   * Indicates whether the data is currently being fetched.
-   * @type {boolean}
-   */
   isLoading: boolean = true;
   // Dependency injection for required services
   authService: AuthService = inject(AuthService);
@@ -110,7 +109,7 @@ export class ProductComponent implements OnInit {
     this.isLoading = true;
     const { filterName, minPrice, maxPrice } = this.filterForm.value;
     this.productService
-      .getProducts(filterName, minPrice, maxPrice, this.currentPage)
+      .getProducts(filterName, minPrice, maxPrice, this.currentPage, this.itemsPerPage)
       .pipe(finalize(() => (this.isLoading = false)))
       .subscribe({
         next: (response: Product[]) => {
@@ -126,6 +125,8 @@ export class ProductComponent implements OnInit {
                 : 0;
             return { ...product, averageRating };
           });
+          // If the number of products equals the items per page, assume that more products are available.
+           this.hasMore = this.products.length === this.itemsPerPage;
         },
         error: (error) => {
           console.error('Error al obtener productos:', error);
@@ -139,7 +140,28 @@ export class ProductComponent implements OnInit {
    * @param {number} newPage - The page number to navigate to.
    */
   changePage(newPage: number): void {
+    if (newPage < 1) return;
     this.currentPage = newPage;
     this.getProducts();
+  }
+/**
+   * Advances to the next page if more products are available.
+   *
+   * @function
+   */
+  nextPage(): void {
+    if (this.hasMore) {
+      this.changePage(this.currentPage + 1);
+    }
+  }
+  /**
+   * Returns to the previous page if currently beyond the first page.
+   *
+   * @function
+   */
+  prevPage(): void {
+    if (this.currentPage > 1) {
+      this.changePage(this.currentPage - 1);
+    }
   }
 }
