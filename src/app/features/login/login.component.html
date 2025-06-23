@@ -4,12 +4,12 @@
       class="card_additional_settings card bg-light shadow-lg p-4 rounded-4 border card_background"
     >
       <h4 class="d-flex justify-content-center">Product Manage</h4>
-      <!-- Ícono de usuario -->
+      <!-- User Icon -->
       <div class="d-flex justify-content-center mb-3">
         <i class="bi bi-person-circle display-4 "></i>
       </div>
 
-      <!-- Formulario con Bootstrap -->
+      <!-- Form with Bootstrap -->
       <form [formGroup]="loginForm" class="d-flex flex-column gap-3">
         <div class="form-group">
           <input
@@ -39,20 +39,20 @@
         </button>
       </form>
 
-      <!-- Indicador de carga -->
+      <!-- Load indicator -->
       <div *ngIf="loading" class="text-center mt-3">
-        <div class="spinner-border text-purple" role="status">
+        <div class="spinner-border " role="status">
           <span class="visually-hidden">Cargando...</span>
         </div>
       </div>
 
-      <!-- Mensaje de error -->
+      <!-- Error message -->
       <div *ngIf="errorMessage" class="alert alert-danger mt-3">
         {{ errorMessage }}
       </div>
 
       <!-- Footer -->
-      <div class="text-center mt-3 text-purple fw-bold">
+      <div class="text-center mt-3  fw-bold">
         Mi primera web mi gente :3
       </div>
     </div>
