@@ -9,6 +9,7 @@ import { finalize } from 'rxjs';
 import { ProductService } from 'src/app/core/services/product.service';
 import { Product } from 'src/app/core/interfaces/product';
 import { ReactiveFormsModule, FormGroup, FormControl } from '@angular/forms';
+
 /**
  * Component representing the product view and functionalities.
  *
@@ -66,6 +67,7 @@ export class ProductComponent implements OnInit {
   authService: AuthService = inject(AuthService);
   cdr: ChangeDetectorRef = inject(ChangeDetectorRef);
   productService: ProductService = inject(ProductService);
+  
 
   //Reactive Form
   filterForm: FormGroup = new FormGroup({
@@ -73,6 +75,7 @@ export class ProductComponent implements OnInit {
     minPrice: new FormControl(null),
     maxPrice: new FormControl(null),
   });
+
   /**
    * Initializes ProductComponent and manages user authentication redirection.
    *
@@ -92,11 +95,16 @@ export class ProductComponent implements OnInit {
     } else {
       this.getProducts();
 
-      this.filterForm.valueChanges.subscribe((values) => {
+
+      this.filterForm.valueChanges.subscribe((_values) => {
         this.currentPage = 1;
         this.getProducts();
       });
     }
+  }
+
+  getUserName():void{
+    const user = this.authService.getUser();
   }
 
   /**
@@ -164,4 +172,13 @@ export class ProductComponent implements OnInit {
       this.changePage(this.currentPage - 1);
     }
   }
+
+
+  submit() {
+    
+        this.router.navigate(['/login']);
+        this.isLoading = false;
+  }
+
+  
 }

@@ -59,6 +59,10 @@ export class AuthService {
   getToken(): string | null {
     return localStorage.getItem('token');
   }
+
+  getUser():Observable<any>| null {
+return this.http.get(`${this.baseUrl}/users/username`);
+  }
   /**
    * Determines if the user is authenticated by checking for a valid token.
    *
