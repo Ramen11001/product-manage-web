@@ -9,6 +9,7 @@ import { finalize } from 'rxjs';
 import { ProductService } from 'src/app/core/services/product.service';
 import { Product } from 'src/app/core/interfaces/product';
 import { ReactiveFormsModule, FormGroup, FormControl } from '@angular/forms';
+
 /**
  * Component representing the product view and functionalities.
  *
@@ -39,6 +40,11 @@ export class ProductComponent implements OnInit {
    */
   minPrice: number | null = null;
   /**
+   * Stores usernames.
+   * @type {string}
+   */
+  username: string | null = null;
+  /**
    * Stores the maximum price filter.
    * @type {number | null}
    */
@@ -53,13 +59,13 @@ export class ProductComponent implements OnInit {
    *
    * @type {number}
    */
-    itemsPerPage: number = 13;
-/**
+  itemsPerPage: number = 12;
+  /**
    * Indicates whether there are more products to fetch beyond the current page.
    *
    * @type {boolean}
    */
-   hasMore = false;
+  hasMore = false;
 
   isLoading: boolean = true;
   // Dependency injection for required services
@@ -73,6 +79,7 @@ export class ProductComponent implements OnInit {
     minPrice: new FormControl(null),
     maxPrice: new FormControl(null),
   });
+
   /**
    * Initializes ProductComponent and manages user authentication redirection.
    *
@@ -90,9 +97,15 @@ export class ProductComponent implements OnInit {
     if (!token) {
       this.router.navigate(['/login']);
     } else {
+      const storedUsername = this.authService.getUsername();
+      console.log(
+        'Username en localStorage:',
+        localStorage.getItem('username'),
+      );
+      this.username = storedUsername || 'Usuario';
       this.getProducts();
 
-      this.filterForm.valueChanges.subscribe((values) => {
+      this.filterForm.valueChanges.subscribe((_values) => {
         this.currentPage = 1;
         this.getProducts();
       });
@@ -109,7 +122,13 @@ export class ProductComponent implements OnInit {
     this.isLoading = true;
     const { filterName, minPrice, maxPrice } = this.filterForm.value;
     this.productService
-      .getProducts(filterName, minPrice, maxPrice, this.currentPage, this.itemsPerPage)
+      .getProducts(
+        filterName,
+        minPrice,
+        maxPrice,
+        this.currentPage,
+        this.itemsPerPage,
+      )
       .pipe(finalize(() => (this.isLoading = false)))
       .subscribe({
         next: (response: Product[]) => {
@@ -126,7 +145,7 @@ export class ProductComponent implements OnInit {
             return { ...product, averageRating };
           });
           // If the number of products equals the items per page, assume that more products are available.
-           this.hasMore = this.products.length === this.itemsPerPage;
+          this.hasMore = this.products.length === this.itemsPerPage;
         },
         error: (error) => {
           console.error('Error al obtener productos:', error);
@@ -144,7 +163,7 @@ export class ProductComponent implements OnInit {
     this.currentPage = newPage;
     this.getProducts();
   }
-/**
+  /**
    * Advances to the next page if more products are available.
    *
    * @function
@@ -163,5 +182,13 @@ export class ProductComponent implements OnInit {
     if (this.currentPage > 1) {
       this.changePage(this.currentPage - 1);
     }
+  }
+
+  submit() {
+  this.authService.logout(); 
+  this.products = [];
+  this.username = null;
+  this.isLoading = false;
+  this.router.navigate(['/login']);
   }
 }

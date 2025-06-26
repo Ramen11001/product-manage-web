@@ -41,6 +41,12 @@ export class AuthService {
   login(user: any): Observable<any> {
     return this.http.post(`${this.baseUrl}/auth/login`, user);
   }
+
+  saveAuthData(token: string, username: string): void {
+    localStorage.setItem('token', token);
+    localStorage.setItem('username', username); // ← ¡Este es el cambio clave!
+    console.log('Datos guardados:', { token, username }); // Para depuración
+  }
   /**
    * Logs out the user by removing the stored token and redirecting to the login page.
    *
@@ -48,6 +54,7 @@ export class AuthService {
    */
   logout() {
     localStorage.removeItem('token'); // Delete token
+    localStorage.removeItem('username'); // Delete username
     this.router.navigate(['/login']); // Redirige al usuario a /login
   }
   /**
@@ -59,6 +66,16 @@ export class AuthService {
   getToken(): string | null {
     return localStorage.getItem('token');
   }
+
+  /**
+   * username from local storage.
+   *
+   * @function
+   * @returns {string|null} - Returns the username if available, otherwise null.
+   */
+  getUsername(): string | null {
+    return localStorage.getItem('username');
+  }
   /**
    * Determines if the user is authenticated by checking for a valid token.
    *
@@ -69,5 +86,4 @@ export class AuthService {
     const token = this.getToken();
     return !!token; // Cheek if token exist
   }
-
 }
