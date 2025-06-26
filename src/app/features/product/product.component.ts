@@ -33,6 +33,7 @@ export class ProductComponent implements OnInit {
    * @type {string}
    */
   filterName: string = '';
+
   /**
    * Stores the minimum price filter.
    * @type {number | null}
@@ -163,5 +164,11 @@ export class ProductComponent implements OnInit {
     if (this.currentPage > 1) {
       this.changePage(this.currentPage - 1);
     }
+  }
+
+  getUserId(){
+
+
+
   }
 }
