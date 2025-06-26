@@ -59,7 +59,7 @@ export class ProductComponent implements OnInit {
    *
    * @type {number}
    */
-  itemsPerPage: number = 13;
+  itemsPerPage: number = 12;
   /**
    * Indicates whether there are more products to fetch beyond the current page.
    *
