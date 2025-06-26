@@ -23,28 +23,10 @@
 
     <!-- Filters -->
     <div class="d-flex justify-content-center gap-3 my-3">
-      <form
-        [formGroup]="filterForm"
-        class="d-flex justify-content-center gap-3 my-3"
-      >
-        <input
-          type="text"
-          formControlName="filterName"
-          class="form-control w-25"
-          placeholder="Buscar por nombre"
-        />
-        <input
-          type="number"
-          formControlName="minPrice"
-          class="form-control w-25"
-          placeholder="Precio mínimo"
-        />
-        <input
-          type="number"
-          formControlName="maxPrice"
-          class="form-control w-25"
-          placeholder="Precio máximo"
-        />
+      <form [formGroup]="filterForm" class="d-flex justify-content-center gap-3 my-3">
+        <input type="text" formControlName="filterName" class="form-control w-25" placeholder="Buscar por nombre" />
+        <input type="number" formControlName="minPrice" class="form-control w-25" placeholder="Precio mínimo" />
+        <input type="number" formControlName="maxPrice" class="form-control w-25" placeholder="Precio máximo" />
       </form>
     </div>
 
@@ -57,27 +39,26 @@
               <h5 class="card-title">{{ product.name }}</h5>
               <p class="card-text text-black">
                 {{
-                  product.description.length > 50
-                    ? product.description.substring(0, 50) + "..."
-                    : product.description
+                product.description.length > 50
+                ? product.description.substring(0, 50) + "..."
+                : product.description
                 }}
               </p>
               <p class="price"><strong>Precio:</strong> ${{ product.price }}</p>
               <a class="btn text-white fw-bold btn_settings"> Ver detalles </a>
+
+
+
+
             </div>
 
             <div class="card-footer">
               <div class="star-rating">
-                <ng-container
-                  *ngFor="let star of [1, 2, 3, 4, 5]; let i = index"
-                >
-                  <i
-                    class="bi"
-                    [ngClass]="{
+                <ng-container *ngFor="let star of [1, 2, 3, 4, 5]; let i = index">
+                  <i class="bi" [ngClass]="{
                       'bi-star-fill': (product.averageRating ?? 0) > i,
                       'bi-star': (product.averageRating ?? 0) <= i,
-                    }"
-                  ></i>
+                    }"></i>
                 </ng-container>
               </div>
             </div>
@@ -97,22 +78,15 @@
 
       <!-- Paging controls -->
       <div class="d-flex justify-content-center align-items-center my-3">
-        <button
-          class="btn btn-secondary m-1"
-          [disabled]="currentPage === 1"
-          (click)="prevPage()"
-        >
+        <button class="btn btn-secondary m-1" [disabled]="currentPage === 1" (click)="prevPage()">
           Anterior
         </button>
         <span class="mx-2">Página {{ currentPage }}</span>
-        <button
-          class="btn btn-secondary m-1"
-          [disabled]="!hasMore"
-          (click)="nextPage()"
-        >
+        <button class="btn btn-secondary m-1" [disabled]="!hasMore" (click)="nextPage()">
           Siguiente
         </button>
       </div>
+
     </div>
   </div>
 </div>

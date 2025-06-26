@@ -34,6 +34,7 @@ export class ProductComponent implements OnInit {
    * @type {string}
    */
   filterName: string = '';
+
   /**
    * Stores the minimum price filter.
    * @type {number | null}

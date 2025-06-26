@@ -1,4 +1,3 @@
-//DESPUÉS DE AUTENTICARME, NO ME LLEVA AL PRODUCT
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {

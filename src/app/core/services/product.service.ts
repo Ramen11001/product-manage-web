@@ -39,7 +39,7 @@ export class ProductService {
     minPrice: number | null,
     maxPrice: number | null,
     currentPage: number,
-      limit: number
+      limit: number,
   ): Observable<Product[]> {
     // Retrieve authentication token from local storage
     const token = localStorage.getItem('token');
