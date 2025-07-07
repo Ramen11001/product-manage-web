@@ -95,12 +95,12 @@ export class AuthService {
     const token = this.getToken();
     if (!token) return null;
     
-    // Decodificar el token JWT para obtener el user ID
+    // Decoding the JWT token to obtain the user ID
     console.log("jaksxnksjaxhn;iduhncdiw;uc");
     try {
       const payload = JSON.parse(atob(token.split('.')[1]));
     
-      return payload.userId || payload.sub; // Depende de cómo esté estructurado tu token
+      return payload.userId || payload.sub; 
     } catch (e) {
       console.error('Error decoding token', e);
       return null;
