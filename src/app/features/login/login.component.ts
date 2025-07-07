@@ -60,9 +60,7 @@ export class LoginComponent {
   constructor(
     private authService: AuthService,
     private router: Router,
-  ) {
-   
-  }
+  ) {}
 
   /**
    * Handles form submission and authentication.
@@ -95,13 +93,21 @@ export class LoginComponent {
       /**
        * Executes when login is successful.
        * - Stores the token in local storage.
+       * - Stores the username in local storage.
        * - Redirects the user to the product.
        *
        * @callback
        * @param {object} response - The server's response containing the token.
        */
       next: (response) => {
-        localStorage.setItem('token', response.token);
+        const token = response.token;
+        const username = response.user.username;
+        if (!token || !username) {
+          console.error('Datos faltantes en respuesta:', response);
+          return;
+        }
+
+        this.authService.saveAuthData(token, username);
         this.router.navigate(['/product']);
         this.loading = false;
       },
