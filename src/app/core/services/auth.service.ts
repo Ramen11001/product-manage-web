@@ -41,11 +41,14 @@ export class AuthService {
   login(user: any): Observable<any> {
     return this.http.post(`${this.baseUrl}/auth/login`, user);
   }
-
+ /**
+   * In charge of storing elements of the user model.
+   *
+   * @function
+   */
   saveAuthData(token: string, username: string): void {
     localStorage.setItem('token', token);
-    localStorage.setItem('username', username); // ← ¡Este es el cambio clave!
-    console.log('Datos guardados:', { token, username }); // Para depuración
+    localStorage.setItem('username', username);
   }
   /**
    * Logs out the user by removing the stored token and redirecting to the login page.

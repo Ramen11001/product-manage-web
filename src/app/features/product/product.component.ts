@@ -90,7 +90,7 @@ export class ProductComponent implements OnInit {
   constructor(
     private router: Router,
     private http: HttpClient,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     const token = this.authService.getToken();
@@ -98,10 +98,6 @@ export class ProductComponent implements OnInit {
       this.router.navigate(['/login']);
     } else {
       const storedUsername = this.authService.getUsername();
-      console.log(
-        'Username en localStorage:',
-        localStorage.getItem('username'),
-      );
       this.username = storedUsername || 'Usuario';
       this.getProducts();
 
@@ -138,9 +134,9 @@ export class ProductComponent implements OnInit {
             const averageRating =
               ratings.length > 0
                 ? ratings.reduce(
-                    (sum: number, rating: number) => sum + rating,
-                    0,
-                  ) / ratings.length
+                  (sum: number, rating: number) => sum + rating,
+                  0,
+                ) / ratings.length
                 : 0;
             return { ...product, averageRating };
           });
@@ -183,12 +179,20 @@ export class ProductComponent implements OnInit {
       this.changePage(this.currentPage - 1);
     }
   }
-
+  /**
+     * Handles form submission.
+     * - Call logout function for  logs out the user by removing the stored token
+     * - if it is correct it presents the elements,
+     * - if not, it returns to the login and does not let you enter /products
+     
+     *
+     * @function
+     */
   submit() {
-  this.authService.logout(); 
-  this.products = [];
-  this.username = null;
-  this.isLoading = false;
-  this.router.navigate(['/login']);
+    this.authService.logout();
+    this.products = [];
+    this.username = null;
+    this.isLoading = false;
+    this.router.navigate(['/login']);
   }
 }
