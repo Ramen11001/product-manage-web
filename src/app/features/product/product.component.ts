@@ -23,6 +23,10 @@ import { ReactiveFormsModule, FormGroup, FormControl } from '@angular/forms';
   imports: [CommonModule, FormsModule, ReactiveFormsModule],
 })
 export class ProductComponent implements OnInit {
+  navigateToCreateProduct() {
+    this.router.navigate(['/createProduct']);
+  }
+
   /**
    * Stores the list of retrieved products.
    * @type {Product[]}
@@ -54,13 +58,13 @@ export class ProductComponent implements OnInit {
    *
    * @type {number}
    */
-    itemsPerPage: number = 13;
-/**
+  itemsPerPage: number = 13;
+  /**
    * Indicates whether there are more products to fetch beyond the current page.
    *
    * @type {boolean}
    */
-   hasMore = false;
+  hasMore = false;
 
   isLoading: boolean = true;
   // Dependency injection for required services
@@ -110,7 +114,13 @@ export class ProductComponent implements OnInit {
     this.isLoading = true;
     const { filterName, minPrice, maxPrice } = this.filterForm.value;
     this.productService
-      .getProducts(filterName, minPrice, maxPrice, this.currentPage, this.itemsPerPage)
+      .getProducts(
+        filterName,
+        minPrice,
+        maxPrice,
+        this.currentPage,
+        this.itemsPerPage,
+      )
       .pipe(finalize(() => (this.isLoading = false)))
       .subscribe({
         next: (response: Product[]) => {
@@ -127,7 +137,7 @@ export class ProductComponent implements OnInit {
             return { ...product, averageRating };
           });
           // If the number of products equals the items per page, assume that more products are available.
-           this.hasMore = this.products.length === this.itemsPerPage;
+          this.hasMore = this.products.length === this.itemsPerPage;
         },
         error: (error) => {
           console.error('Error al obtener productos:', error);
@@ -145,7 +155,7 @@ export class ProductComponent implements OnInit {
     this.currentPage = newPage;
     this.getProducts();
   }
-/**
+  /**
    * Advances to the next page if more products are available.
    *
    * @function
@@ -166,9 +176,5 @@ export class ProductComponent implements OnInit {
     }
   }
 
-  getUserId(){
-
-
-
-  }
+  getUserId() {}
 }

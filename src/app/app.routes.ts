@@ -42,7 +42,7 @@ export const routes: Routes = [
     canActivate: [authGuard],
   },
    {
-    path: 'createUser',
+    path: 'createProduct',
     component:  createProductComponent,
    
   },
