@@ -1,143 +1,132 @@
 <div class="body">
-  <div class="container-md px-4 py-2  ">
+  <div class="container-md px-4 py-2">
     <!-- Banner -->
     <section class="text-white position-relative border banner">
-      <div class="container-fluid">
-        <div class="d-flex justify-content-between align-items-center p-4">
-          <!-- Left side - Application name-->
-          <div>
-            <h2 class="fw-bold m-0">Web de producto</h2>
-          </div>
-
-          <!--Right side - Message and button  -->
-          <div class="d-flex align-items-center gap-3">
-            <p class="fw-bold m-0">Bienvenido <strong>{{ username }}!!!</strong></p>
-
-            <button type="button" class="btn border text-light" (click)="submit()">
-              Cerrar sesión
-            </button>
+      <div class="row row-cols-1 row-cols-md-4 g-4 align-items-center mx-0">
+        <div class="col-md-6">
+          <div class="p-5">
+            <div class="dropdown">
+              <button
+                class="btn btn-secondary dropdown-toggle"
+                type="button"
+                id="dropdownMenuButton1"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                <i class="bi bi-card-list"></i>
+                Opciones
+              </button>
+              <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                <li>
+                  <a class="dropdown-item" (click)="navigateToCreateProduct()"
+                    >Crear Producto</a
+                  >
+                </li>
+                <li><a class="dropdown-item" href="#">Editar Producto</a></li>
+                <li><a class="dropdown-item" href="#">Eliminar Producto</a></li>
+              </ul>
+            </div>
+            <h2 class="fw-bold">Bienvenido al Dto.</h2>
           </div>
         </div>
-        m<div class="body">
-          <div class="container-md px-4 py-2">
+        <div class="col-md-6 position-relative">
+          <div class="d-flex justify-content-around align-items-center"></div>
+        </div>
+      </div>
+    </section>
 
-            <div class="container">
-              <a class="navbar-brand" href="#">Container</a>
-              <button class="navbar-toggler collapsed" type="button" data-toggle="collapse"
-                data-target="#navbarsExample07" aria-controls="navbarsExample07" aria-expanded="false"
-                aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-              </button>
+    <!-- Filters -->
+    <div class="d-flex justify-content-center gap-3 my-3">
+      <form
+        [formGroup]="filterForm"
+        class="d-flex justify-content-center gap-3 my-3"
+      >
+        <input
+          type="text"
+          formControlName="filterName"
+          class="form-control w-25"
+          placeholder="Buscar por nombre"
+        />
+        <input
+          type="number"
+          formControlName="minPrice"
+          class="form-control w-25"
+          placeholder="Precio mínimo"
+        />
+        <input
+          type="number"
+          formControlName="maxPrice"
+          class="form-control w-25"
+          placeholder="Precio máximo"
+        />
+      </form>
+    </div>
 
+    <!-- Product Cards -->
+    <div *ngIf="!isLoading" class="card-deck h-100">
+      <div class="row">
+        <div class="col-12 col-md-6 col-lg-4" *ngFor="let product of products">
+          <div class="card border card_border m-2">
+            <div class="card-body text-black">
+              <h5 class="card-title">{{ product.name }}</h5>
+              <p class="card-text text-black">
+                {{
+                  product.description.length > 50
+                    ? product.description.substring(0, 50) + "..."
+                    : product.description
+                }}
+              </p>
+              <p class="price"><strong>Precio:</strong> ${{ product.price }}</p>
+              <a class="btn text-white fw-bold btn_settings"> Ver detalles </a>
+            </div>
 
-
-              <!-- Banner -->
-              <section class="text-white position-relative border banner">
-                <div class="row row-cols-1 row-cols-md-4 g-4 align-items-center mx-0">
-                  <div class="col-md-6">
-                    <div class="p-5">
-                      <div class="dropdown">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
-                          data-bs-toggle="dropdown" aria-expanded="false"> <i class="bi bi-card-list"></i>
-                          Opciones
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                          <li><a class="dropdown-item" href="#">Crear Producto</a></li>
-                          <li><a class="dropdown-item" href="#">Editar Producto</a></li>
-                          <li><a class="dropdown-item" href="#">Eliminar Producto</a></li>
-                        </ul>
-                      </div>
-                      <h2 class="fw-bold">Bienvenido al Dto.</h2>
-                    </div>
-                  </div>
-                  <div class="col-md-6 position-relative">
-                    <div class="d-flex justify-content-around align-items-center"></div>
-                  </div>
-                </div>
-              </section>
-
-              <!-- Filters -->
-              <div class="d-flex justify-content-center gap-3 my-3">
-                <form [formGroup]="filterForm" class="d-flex justify-content-center gap-3 my-3">
-                  <input type="text" formControlName="filterName" class="form-control w-25"
-                    placeholder="Buscar por nombre" />
-                  <input type="number" formControlName="minPrice" class="form-control w-25"
-                    placeholder="Precio mínimo" />
-                  <input type="number" formControlName="maxPrice" class="form-control w-25"
-                    placeholder="Precio máximo" />
-                </form>
-              </div>
-
-              <!-- Product Cards -->
-              <div *ngIf="!isLoading" class="card-deck h-100">
-                <div class="row">
-                  <div class="col-12 col-md-6 col-lg-4" *ngFor="let product of products">
-                    <div class="card border card_border m-2">
-                      <div class="card-body text-black">
-                        <h5 class="card-title">{{ product.name }}</h5>
-                        <p class="card-text text-black">
-                          {{
-                          product.description.length > 50
-                          ? product.description.substring(0, 50) + "..."
-                          : product.description
-                          }}
-                        </p>
-                        <p class="price"><strong>Precio:</strong> ${{ product.price }}</p>
-                        <a class="btn text-white fw-bold btn_settings"> Ver detalles </a>
-                      </div>
-
-                      <!-- Product Cards -->
-                      <div *ngIf="!isLoading" class="card-deck h-100 mw-100  ">
-                        <div class="row">
-                          <div class="col-12 col-md-6 col-lg-4" *ngFor="let product of products">
-                            <div class="card border card_border m-2">
-                              <div class="card-body text-black">
-                                <h5 class="card-title">{{ product.name }}</h5>
-                                <p class="card-text text-black">
-                                  {{
-                                  product.description.length > 50
-                                  ? product.description.substring(0, 50) + "..."
-                                  : product.description
-                                  }}
-                                </p>
-                                <p class="price"><strong>Precio:</strong> ${{ product.price }}</p>
-                                <a class="btn text-white fw-bold btn_settings"> Ver detalles </a>
-                              </div>
-                              <div class="card-footer">
-                                <div class="star-rating">
-                                  <ng-container *ngFor="let star of [1, 2, 3, 4, 5]; let i = index">
-                                    <i class="bi" [ngClass]="{
+            <div class="card-footer">
+              <div class="star-rating">
+                <ng-container
+                  *ngFor="let star of [1, 2, 3, 4, 5]; let i = index"
+                >
+                  <i
+                    class="bi"
+                    [ngClass]="{
                       'bi-star-fill': (product.averageRating ?? 0) > i,
                       'bi-star': (product.averageRating ?? 0) <= i,
-                    }"></i>
-                                  </ng-container>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
+                    }"
+                  ></i>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
-                        <!-- Loading Template -->
-                        <ng-template #loadingTemplate>
-                          <p>Cargando productos...</p>
-                        </ng-template>
+      <!-- Loading Template -->
+      <ng-template #loadingTemplate>
+        <p>Cargando productos...</p>
+      </ng-template>
 
-                        <!-- No Products Found Template -->
-                        <ng-template #noProducts>
-                          <p>No se encuentran productos.</p>
-                        </ng-template>
+      <!-- No Products Found Template -->
+      <ng-template #noProducts>
+        <p>No se encuentran productos.</p>
+      </ng-template>
 
-                        <!-- Paging controls -->
-                        <div class="d-flex justify-content-center align-items-center my-3">
-                          <button class="btn btn-secondary m-1" [disabled]="currentPage === 1" (click)="prevPage()">
-                            Anterior
-                          </button>
-                          <span class="mx-2">Página {{ currentPage }}</span>
-                          <button class="btn btn-secondary m-1" [disabled]="!hasMore" (click)="nextPage()">
-                            Siguiente
-                          </button>
-                        </div>
-
-                      </div>
-                    </div>
-                  </div>
+      <!-- Paging controls -->
+      <div class="d-flex justify-content-center align-items-center my-3">
+        <button
+          class="btn btn-secondary m-1"
+          [disabled]="currentPage === 1"
+          (click)="prevPage()"
+        >
+          Anterior
+        </button>
+        <span class="mx-2">Página {{ currentPage }}</span>
+        <button
+          class="btn btn-secondary m-1"
+          [disabled]="!hasMore"
+          (click)="nextPage()"
+        >
+          Siguiente
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -24,6 +24,10 @@ import { ReactiveFormsModule, FormGroup, FormControl } from '@angular/forms';
   imports: [CommonModule, FormsModule, ReactiveFormsModule],
 })
 export class ProductComponent implements OnInit {
+  navigateToCreateProduct() {
+    this.router.navigate(['/createProduct']);
+  }
+
   /**
    * Stores the list of retrieved products.
    * @type {Product[]}
