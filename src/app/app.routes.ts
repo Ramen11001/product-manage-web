@@ -48,7 +48,7 @@ export const routes: Routes = [
    
   },
    {
-    path: 'products/edit/:id',  // El :id es un parámetro variable
+    path: 'edit/:id', 
     component: EditProductComponent
   }
 ];

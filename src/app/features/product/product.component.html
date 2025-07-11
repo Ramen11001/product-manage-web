@@ -22,9 +22,7 @@
                     >Crear Producto</a
                   >
                 </li>
-                <li><a class="dropdown-item" (click)="navigateToEditProduct()"
-                    >Editar Producto</a
-                  ></li>
+               
                 <li><a class="dropdown-item" href="#">Eliminar Producto</a></li>
               </ul>
             </div>
@@ -80,6 +78,8 @@
               </p>
               <p class="price"><strong>Precio:</strong> ${{ product.price }}</p>
               <a class="btn text-white fw-bold btn_settings"> Ver detalles </a>
+               <a class="btn text-white fw-bold btn_settings_1 ms-5" (click)="navigateToEditProduct()"> Editar Producto </a>
+                <a class="btn text-white fw-bold btn_settings_3 ms-5"> Eliminar Producto </a>
             </div>
 
             <div class="card-footer">
