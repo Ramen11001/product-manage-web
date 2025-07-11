@@ -9,6 +9,7 @@ import { finalize } from 'rxjs';
 import { ProductService } from 'src/app/core/services/product.service';
 import { Product } from 'src/app/core/interfaces/product';
 import { ReactiveFormsModule, FormGroup, FormControl } from '@angular/forms';
+import { HttpHeaders } from '@angular/common/http';
 /**
  * Component representing the product view and functionalities.
  *
@@ -26,7 +27,9 @@ export class ProductComponent implements OnInit {
   navigateToCreateProduct() {
     this.router.navigate(['/createProduct']);
   }
-
+navigateToEditProduct() {
+    this.router.navigate(['/products/edit/:id']);
+  }
   /**
    * Stores the list of retrieved products.
    * @type {Product[]}

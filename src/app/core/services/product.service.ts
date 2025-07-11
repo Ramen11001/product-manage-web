@@ -15,6 +15,9 @@ import { Product } from 'src/app/core/interfaces/product';
   providedIn: 'root',
 })
 export class ProductService {
+  updateProduct(productId: string, value: any) {
+    throw new Error('Method not implemented.');
+  }
   /**
    * Injects the HttpClient service for making HTTP requests.
    * @private
