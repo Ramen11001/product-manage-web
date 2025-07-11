@@ -28,7 +28,7 @@ export class ProductComponent implements OnInit {
     this.router.navigate(['/createProduct']);
   }
 navigateToEditProduct() {
-    this.router.navigate(['/products/edit/:id']);
+    this.router.navigate(['/edit/:id']);
   }
   /**
    * Stores the list of retrieved products.

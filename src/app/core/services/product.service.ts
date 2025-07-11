@@ -15,6 +15,9 @@ import { Product } from 'src/app/core/interfaces/product';
   providedIn: 'root',
 })
 export class ProductService {
+  getProduct() {
+    throw new Error('Method not implemented.');
+  }
   updateProduct(productId: string, value: any) {
     throw new Error('Method not implemented.');
   }

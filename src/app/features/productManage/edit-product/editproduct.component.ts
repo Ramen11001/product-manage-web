@@ -1,28 +1,34 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule,  } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ProductService } from 'src/app/core/services/product.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { Product } from 'src/app/core/interfaces/product';
+import { productService } from 'src/app/core/services/editProduct.service';
+import { CommonModule } from '@angular/common';
 
-
-//NO ME ESTÁ RECONOCIENDO getProduct, no sé como inicializar enel constructor....
 @Component({
   selector: 'app-edit-product',
   templateUrl: './editproduct.component.html',
-  styleUrls: ['./editproduct.component.scss']
+   standalone: true,
+  styleUrls: ['./editproduct.component.scss'],
+  imports: [ ReactiveFormsModule, CommonModule],
 })
 export class EditProductComponent {
+navigateNotPermise() {
+    this.router.navigate(['/product']);
+  }
+
   productForm: FormGroup;
   isLoading = false;
   productId: number;
   errorMessage: string | null = null;
+  canEdit = false;
 
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private productService: ProductService,
+    private productService: productService,
     private authService: AuthService
   ) {
     this.productForm = this.fb.group({
@@ -31,22 +37,25 @@ export class EditProductComponent {
       description: ['', [Validators.required, Validators.minLength(10)]]
     });
 
-    const idParam = this.route.snapshot.paramMap.get('id');
-    if (!idParam || isNaN(+idParam)) {
-      this.handleError('ID de producto no válido');
-      return;
-    }
-    this.productId = +idParam;
+    this.productId = Number(this.route.snapshot.paramMap.get('id'));
   }
 
   ngOnInit(): void {
-    this.loadProduct();
+    this.route.paramMap.subscribe(params => {
+      const idParam = params.get('id');
+      if (idParam && !isNaN(Number(idParam))) {
+        this.productId = Number(idParam);
+        this.loadProduct();
+      } else {
+        this.showError('ID de producto inválido');
+      }
+    });
   }
 
   private handleError(message: string): void {
     this.errorMessage = message;
     this.isLoading = false;
-    setTimeout(() => this.router.navigate(['/products']), 2000);
+    setTimeout(() => this.router.navigate(['/edit/:id']), 2000);
   }
 
   loadProduct(): void {
@@ -66,6 +75,7 @@ export class EditProductComponent {
           return;
         }
 
+        this.canEdit = true; // User has permission to edit
         this.productForm.patchValue({
           name: product.name,
           price: product.price,
@@ -73,12 +83,18 @@ export class EditProductComponent {
         });
         this.isLoading = false;
       },
-      error: (err: any) => {
-        this.handleError(err.status === 404 
-          ? 'Producto no encontrado' 
-          : 'Error al cargar el producto');
+      error: (err: string) => {
+        // Updated error handling
+        if (err === 'Producto no encontrado') {
+          this.showError('Producto no encontrado');
+        } else {
+          this.showError('Error al cargar el producto');
+        }
       }
     });
+  }
+  showError(arg0: string) {
+    throw new Error('Method not implemented.');
   }
 
   onSubmit(): void {
@@ -97,7 +113,7 @@ export class EditProductComponent {
 
     this.productService.updateProduct(this.productId, productData).subscribe({
       next: () => {
-        this.router.navigate(['/products'], {
+        this.router.navigate(['/edit/:id'], {
           state: { message: 'Producto actualizado exitosamente' }
         });
       },
@@ -109,4 +125,8 @@ export class EditProductComponent {
       }
     });
   }
+
+  
+
+
 }

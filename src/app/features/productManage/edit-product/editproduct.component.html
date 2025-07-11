@@ -9,7 +9,7 @@
   </div>
 
   <!-- Formulario -->
-  <form *ngIf="!isLoading && product" [formGroup]="productForm" (ngSubmit)="onSubmit()">
+  <form *ngIf="!isLoading && productId" [formGroup]="productForm" (ngSubmit)="onSubmit()">
     <!-- Campo Nombre -->
     <div class="mb-3">
       <label class="form-label">Nombre</label>
