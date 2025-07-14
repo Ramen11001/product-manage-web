@@ -48,7 +48,6 @@ export const routes: Routes = [
    
   },
    {
-    path: 'edit/:id', 
-    component: EditProductComponent
+  path: 'edit/:id', component: EditProductComponent
   }
 ];

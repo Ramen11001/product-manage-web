@@ -32,30 +32,25 @@ navigateNotPermise() {
     private authService: AuthService
   ) {
     this.productForm = this.fb.group({
-      name: ['', [Validators.required, Validators.minLength(3)]],
-      price: [0, [Validators.required, Validators.min(0.01)]],
-      description: ['', [Validators.required, Validators.minLength(10)]]
+      name: ['', [Validators.minLength(3)]],
+      price: [0, ],
+      description: ['', Validators.minLength(10)]
     });
 
     this.productId = Number(this.route.snapshot.paramMap.get('id'));
   }
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe(params => {
-      const idParam = params.get('id');
-      if (idParam && !isNaN(Number(idParam))) {
-        this.productId = Number(idParam);
-        this.loadProduct();
-      } else {
-        this.showError('ID de producto inválido');
-      }
-    });
+    //PARA BTENER EL ID.
+    const id = this.route.snapshot.params['id']
+
+    
   }
 
   private handleError(message: string): void {
     this.errorMessage = message;
     this.isLoading = false;
-    setTimeout(() => this.router.navigate(['/edit/:id']), 2000);
+    setTimeout(() => this.router.navigate(['/edit/:']), 2000);
   }
 
   loadProduct(): void {
@@ -98,35 +93,52 @@ navigateNotPermise() {
   }
 
   onSubmit(): void {
-    if (this.productForm.invalid) {
-      this.productForm.markAllAsTouched();
-      return;
-    }
-
+  // Marcar todos los campos como tocados para mostrar errores de validación
+  this.productForm.markAllAsTouched();
+  
+  // Verificar si el formulario es válido después de marcar los campos
+  if (this.productForm.valid) {
+    // Activar estado de carga
     this.isLoading = true;
+    // Limpiar mensajes de error previos
     this.errorMessage = null;
 
-    const productData: Partial<Product> = {
+    // Preparar datos del formulario convirtiendo price a número
+    const formData = {
       ...this.productForm.value,
+      price: Number(this.productForm.value.price),
+      // Añadir el ID del usuario actual
       userId: this.authService.getCurrentUserId()!
     };
 
-    this.productService.updateProduct(this.productId, productData).subscribe({
+    // Llamar al servicio para actualizar el producto
+    this.productService.updateProduct(this.productId, formData).subscribe({
       next: () => {
-        this.router.navigate(['/edit/:id'], {
+        // Desactivar estado de carga
+        this.isLoading = false;
+        // Redirigir a la página de detalle del producto con mensaje de éxito
+        this.router.navigate(['/edit', this.productId], {
           state: { message: 'Producto actualizado exitosamente' }
         });
       },
-      error: (err: any) => {
+      error: (error) => {
+        // Desactivar estado de carga
         this.isLoading = false;
-        this.errorMessage = err.status === 403
-          ? 'No tienes permiso para actualizar este producto'
-          : 'Error al actualizar el producto';
+        
+        // Manejar diferentes tipos de errores
+        if (error.status === 403) {
+          this.errorMessage = 'No tienes permiso para actualizar este producto';
+        } else if (error.status === 404) {
+          this.errorMessage = 'Producto no encontrado';
+        } else {
+          this.errorMessage = 'Error al actualizar el producto: ' + 
+                              (error.error?.message || error.message);
+        }
       }
     });
   }
+}
 
-  
 
 
 }

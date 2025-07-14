@@ -10,6 +10,7 @@ import { ProductService } from 'src/app/core/services/product.service';
 import { Product } from 'src/app/core/interfaces/product';
 import { ReactiveFormsModule, FormGroup, FormControl } from '@angular/forms';
 import { HttpHeaders } from '@angular/common/http';
+import { EditProductComponent } from '../productManage/edit-product/editproduct.component';
 /**
  * Component representing the product view and functionalities.
  *
@@ -28,7 +29,7 @@ export class ProductComponent implements OnInit {
     this.router.navigate(['/createProduct']);
   }
 navigateToEditProduct() {
-    this.router.navigate(['/edit/:id']);
+    this.router.navigate(['edit/:id']);
   }
   /**
    * Stores the list of retrieved products.
