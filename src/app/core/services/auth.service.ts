@@ -74,13 +74,17 @@ export class AuthService {
       getCurrentUserId(): number | null {
     const token = this.getToken();
     if (!token) return null;
-    
-    // Decoding the JWT token to obtain the user ID
-    console.log("jaksxnksjaxhn;iduhncdiw;uc");
     try {
-      const payload = JSON.parse(atob(token.split('.')[1]));
+       const base64Url = token.split('.')[1];
+      const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+      const payload = JSON.parse(decodeURIComponent(
+        atob(base64)
+          .split('')
+          .map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
+          .join('')
+      ));
     
-      return payload.userId || payload.sub; 
+     return payload.userId || payload.id || payload.sub; 
     } catch (e) {
       console.error('Error decoding token', e);
       return null;
