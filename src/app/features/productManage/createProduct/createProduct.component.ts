@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { CreateProductService } from 'src/app/core/services/createUser.service';
+import { CreateProductService } from 'src/app/core/services/createProduct.service';
 /**
  * Component representing the login functionality.
  *
@@ -29,9 +29,9 @@ export class CreateProductComponent {
     private productService: CreateProductService
   ) {
     this.productForm = this.fb.group({
-      productName: ['', [Validators.required, Validators.minLength(3)]],
+      name: ['', [Validators.required, Validators.minLength(3)]],
       price: [null, [Validators.required, Validators.min(0)]], 
-      description: ['', [Validators.required, Validators.minLength(10)]]
+      description: ['', Validators.minLength(10)]
     });
   }
 

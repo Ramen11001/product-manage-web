@@ -17,22 +17,22 @@
      <form [formGroup]="productForm" (ngSubmit)="onSubmit()" class="elements">
   <div class="row">
     <div class="col-md-6 col-sm-12 mb-3">
-      <label for="productName">Nombre del Producto</label>
+      <label for="name">Nombre del Producto</label>
       <input
         type="text"
         class="form-control"
-        id="productName"
-        formControlName="productName"
+        id="name"
+        formControlName="name"
         placeholder="nombre del producto"
       />
-      <div *ngIf="productForm.get('productName')?.invalid && 
-                 (productForm.get('productName')?.dirty || 
-                  productForm.get('productName')?.touched)"
+      <div *ngIf="productForm.get('name')?.invalid && 
+                 (productForm.get('name')?.dirty || 
+                  productForm.get('name')?.touched)"
            class="text-danger">
-        <small *ngIf="productForm.get('productName')?.errors?.['required']">
+        <small *ngIf="productForm.get('name')?.errors?.['required']">
           El nombre del producto es requerido.
         </small>
-        <small *ngIf="productForm.get('productName')?.errors?.['minlength']">
+        <small *ngIf="productForm.get('name')?.errors?.['minlength']">
           El nombre debe tener al menos 3 caracteres.
         </small>
       </div>
@@ -68,7 +68,7 @@
       class="form-control"
       id="description"
       formControlName="description"
-      placeholder="descripción del producto"
+      placeholder="descripción del producto (opcional)"
     />
     <div *ngIf="productForm.get('description')?.invalid && 
                (productForm.get('description')?.dirty || 
