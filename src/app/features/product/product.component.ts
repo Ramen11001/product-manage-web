@@ -6,11 +6,10 @@ import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { finalize } from 'rxjs';
-import { ProductService } from 'src/app/core/services/product.service';
+import { ProductsService } from 'src/app/core/services/products.service';
 import { Product } from 'src/app/core/interfaces/product';
 import { ReactiveFormsModule, FormGroup, FormControl } from '@angular/forms';
-import { HttpHeaders } from '@angular/common/http';
-import { EditProductComponent } from '../productManage/edit-product/editproduct.component';
+
 /**
  * Component representing the product view and functionalities.
  *
@@ -28,8 +27,8 @@ export class ProductComponent implements OnInit {
   navigateToCreateProduct() {
     this.router.navigate(['/createProduct']);
   }
-navigateToEditProduct(id:number) {
-    this.router.navigate(['edit/' + id ]);
+  navigateToEditProduct(id: number) {
+    this.router.navigate(['edit/' + id]);
   }
   /**
    * Stores the list of retrieved products.
@@ -74,7 +73,7 @@ navigateToEditProduct(id:number) {
   // Dependency injection for required services
   authService: AuthService = inject(AuthService);
   cdr: ChangeDetectorRef = inject(ChangeDetectorRef);
-  productService: ProductService = inject(ProductService);
+  productService: ProductsService = inject(ProductsService);
 
   //Reactive Form
   filterForm: FormGroup = new FormGroup({
@@ -92,7 +91,7 @@ navigateToEditProduct(id:number) {
   constructor(
     private router: Router,
     private http: HttpClient,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     const token = this.authService.getToken();
@@ -134,9 +133,9 @@ navigateToEditProduct(id:number) {
             const averageRating =
               ratings.length > 0
                 ? ratings.reduce(
-                    (sum: number, rating: number) => sum + rating,
-                    0,
-                  ) / ratings.length
+                  (sum: number, rating: number) => sum + rating,
+                  0,
+                ) / ratings.length
                 : 0;
             return { ...product, averageRating };
           });
@@ -180,5 +179,5 @@ navigateToEditProduct(id:number) {
     }
   }
 
-  getUserId() {}
+  getUserId() { }
 }

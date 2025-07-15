@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { CreateProductService } from 'src/app/core/services/createProduct.service';
+import { ProductsService } from 'src/app/core/services/products.service';
 /**
  * Component representing the login functionality.
  *
@@ -26,11 +26,11 @@ export class CreateProductComponent {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private productService: CreateProductService
+    private productService: ProductsService
   ) {
     this.productForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
-      price: [null, [Validators.required, Validators.min(0)]], 
+      price: [null, [Validators.required, Validators.min(0)]],
       description: ['', Validators.minLength(10)]
     });
   }
@@ -38,17 +38,17 @@ export class CreateProductComponent {
   onSubmit() {
     // Mark all fields as touched to show errors
     this.productForm.markAllAsTouched();
-    
+
     if (this.productForm.valid) {
       this.isLoading = true;
-      
+
       // Convertir price a número
       const formData = {
         ...this.productForm.value,
         price: Number(this.productForm.value.price)
       };
 
-      this.productService.createProduct(formData).subscribe({
+      this.productService.saveProduct(formData).subscribe({
         next: (response) => {
           this.isLoading = false;
           this.router.navigate(['/product']);
