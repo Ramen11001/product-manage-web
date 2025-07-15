@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule,  } from '@angu
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { Product } from 'src/app/core/interfaces/product';
-import { productService } from 'src/app/core/services/editProduct.service';
+import { ProductsService } from 'src/app/core/services/products.service';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -28,7 +28,7 @@ navigateNotPermise() {
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private productService: productService,
+    private productService: ProductsService,
     private authService: AuthService
   ) {
     this.productForm = this.fb.group({
@@ -62,7 +62,7 @@ navigateNotPermise() {
       return;
     }
 
-    this.productService.getProduct(this.productId).subscribe({
+    this.productService.getProductId(this.productId).subscribe({
       next: (product: Product) => {
         if (product.userId !== currentUserId) {
           this.handleError('No tienes permiso para editar este producto');
@@ -111,7 +111,7 @@ navigateNotPermise() {
     };
 
     // Llamar al servicio para actualizar el producto
-    this.productService.updateProduct(this.productId, formData).subscribe({
+    this.productService.saveProduct(this.productId, formData).subscribe({
       next: () => {
         // Desactivar estado de carga
         this.isLoading = false;
