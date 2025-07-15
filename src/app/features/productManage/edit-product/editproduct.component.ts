@@ -36,13 +36,12 @@ navigateNotPermise() {
       price: [0, ],
       description: ['', Validators.minLength(10)]
     });
-
+//Parar obtener id
     this.productId = Number(this.route.snapshot.paramMap.get('id'));
   }
 
   ngOnInit(): void {
-    //PARA BTENER EL ID.
-    const id = this.route.snapshot.params['id']
+  this.loadProduct();
 
     
   }
