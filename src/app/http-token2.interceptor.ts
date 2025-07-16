@@ -2,12 +2,11 @@ import { HttpInterceptorFn } from "@angular/common/http";
 import { AuthService } from "./core/services/auth.service";
 import { inject } from "@angular/core";
 
-//NO NECITO HACER LOS HEADERS MANUALMENTE
 export const tokenIntrception: HttpInterceptorFn = (req, next) => {
   const authService = inject(AuthService)
   const token = authService.getToken();
 
-  // Clonar la solicitud para añadir la cabecera de autenticación
+  // Clone the request to add the authentication header
   if (token) {
     req = req.clone({
       setHeaders: {
@@ -16,6 +15,6 @@ export const tokenIntrception: HttpInterceptorFn = (req, next) => {
     });
   }
 
-  // Continuar con la solicitud y manejar errores de forma centralizada
+//Continue with the request and handle errors in a centralized manner.
   return next(req)
 }
