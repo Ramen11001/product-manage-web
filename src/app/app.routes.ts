@@ -1,9 +1,10 @@
 import { Routes } from '@angular/router';
 import { LoginComponent } from './features/login/login.component';
 import { authGuard } from './core/guards/auth.guard';
-import { ProductComponent } from './features/product/product.component'
+import { ProductComponent } from './features/productManage/product/product.component'
 import { CreateProductComponent } from './features/productManage/createProduct/createProduct.component';
 import { EditProductComponent } from './features/productManage/edit-product/editproduct.component';
+
 /**
  * Defines the application routes and their associated components.
  *
@@ -48,6 +49,9 @@ export const routes: Routes = [
    
   },
    {
-  path: 'edit/:id', component: EditProductComponent
-  }
+  path: 'edit/:id',
+   component: EditProductComponent
+  },
+
+  
 ];

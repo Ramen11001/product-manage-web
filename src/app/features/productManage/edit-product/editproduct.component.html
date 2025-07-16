@@ -6,23 +6,23 @@
     <h3 class="text-dark">Editar Producto</h3>
   </div>
 
-  <!-- Contenido principal -->
+  <!-- Main Container -->
   <div class="row">
     <div class="col-12 order-md-1">
       <h4 class="mb-3">Recuerde rellenar el campo que desea editar.</h4>
       
-      <!-- Mensaje de carga -->
+      <!--Loading message -->
       <div *ngIf="isLoading && !errorMessage" class="alert alert-info">
         <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
         Cargando información del producto...
       </div>
       
-      <!-- Mensaje cuando no se tiene permiso -->
+      <!-- Message when permission is not granted -->
       <div *ngIf="!canEdit && !isLoading && !errorMessage" class="alert alert-warning">
         No tienes permiso para editar este producto. Redirigiendo...
       </div>
       
-      <!-- Formulario (solo visible con permisos) -->
+      <!-- Form (only visible with permissions)-->
       <form *ngIf="canEdit" [formGroup]="productForm" (ngSubmit)="onSubmit()" class="elements">
         <div class="row">
           <div class="col-md-6 col-sm-12 mb-3">

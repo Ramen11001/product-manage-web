@@ -5,7 +5,7 @@ import { catchError, Observable, switchMap, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Product } from 'src/app/core/interfaces/product';
 import { AuthService } from './auth.service';
-import { tokenIntrception } from 'src/app/http-token2.interceptor';
+
 /**
  * Service responsible for handling product-related API requests.
  *
@@ -16,14 +16,29 @@ import { tokenIntrception } from 'src/app/http-token2.interceptor';
   providedIn: 'root',
 })
 export class ProductsService {
-
-  private authService = inject(AuthService);
+  /**
+   * Base URL for products API endpoint.
+   * @private
+   * @type {string}
+   */
+  private apiUrl = `${environment.baseUrl}/products`;
   /**
    * Injects the HttpClient service for making HTTP requests.
    * @private
    * @type {HttpClient}
    */
   private http = inject(HttpClient);
+  /**
+    * Injects the authService service for making validations.
+    * @private
+    * @type {AuthService}
+    */
+  private authService = inject(AuthService);
+  /**
+   * Injects the handleError.
+   * @private
+   * @type {handleError}
+   */
   private handleError(error: HttpErrorResponse) {
     console.error('Error en la petición:', error);
 
@@ -33,7 +48,6 @@ export class ProductsService {
 
     return throwError(() => new Error('Ocurrió un error al procesar la solicitud'));
   }
-  private apiUrl = `${environment.baseUrl}/products`;
 
   /**
    * Fetches products from the backend using search filters and pagination.
@@ -79,19 +93,36 @@ export class ProductsService {
     });
   }
 
-  //Obtener todos los productos
+  /**
+    * Fetches all products without filters or pagination.
+    * @returns {Observable<Product[]>} Observable containing all products
+    */
   allProduct() {
     return this.http.get<Product[]>(`${this.apiUrl}`);
   }
 
-  //Devuelve los productos por el id
+  /**
+   * Gets single product by ID.
+   * @param {number} id - Product ID
+   * @returns {Observable<Product>} Observable containing requested product
+   */
   getProductId(id: number): Observable<Product> {
+    //Returns products by id
     return this.http.get<Product>(`${this.apiUrl}/${id}`);
   }
 
+  /**
+     * Creates or updates a product.
+     * - For updates: Verifies authenticated user owns the product
+     * - For creations: Assigns current user as product owner
+     *
+     * @param {number | null} id - Product ID (null for new products)
+     * @param {Omit<Product, 'userId'>} [productData] - Product data (without userId)
+     * @returns {Observable<Product>} Observable of saved product
+     * @throws {Error} Authentication or ownership errors
+     */
+  saveProduct(id: number | null, productData?: Omit<Product, 'userId'>) {
 
-  saveProduct(id: number, productData?: Omit<Product, 'userId'>){
-   
     if (id) {
       //Primero, verifico si el user autenticado es el dueño:
       return this.getProductId(id).pipe(
@@ -133,7 +164,12 @@ export class ProductsService {
 
 
   }
-
+  /**
+     * Deletes product by ID.
+     * @param {number} id - Product ID to delete
+     * @returns {Observable<Product>} Observable of deleted product
+     * @throws {Error} If product ID is not provided
+     */
   deleteProduct(id: number) {
     if (!id) {
       return throwError(() => new Error('Producto no encontrado'));
