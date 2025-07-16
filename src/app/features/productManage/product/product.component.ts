@@ -23,12 +23,6 @@ import { ReactiveFormsModule, FormGroup, FormControl } from '@angular/forms';
   imports: [CommonModule, FormsModule, ReactiveFormsModule],
 })
 export class ProductComponent implements OnInit {
-  navigateToCreateProduct() {
-    this.router.navigate(['/createProduct']);
-  }
-  navigateToEditProduct(id: number) {
-    this.router.navigate(['edit/' + id]);
-  }
   /**
    * Stores the list of retrieved products.
    * @type {Product[]}
@@ -185,20 +179,50 @@ export class ProductComponent implements OnInit {
       this.changePage(this.currentPage - 1);
     }
   }
+
   /**
-     * Handles form submission.
-     * - Call logout function for  logs out the user by removing the stored token
-     * - if it is correct it presents the elements,
-     * - if not, it returns to the login and does not let you enter /products
-     
-     *
-     * @function
-     */
-  submit() {
-    this.authService.logout();
-    this.products = [];
-    this.username = null;
-    this.isLoading = false;
-    this.router.navigate(['/login']);
+   * Navigates to the product creation page.
+   * Uses Angular Router to navigate to '/createProduct' route.
+   * @returns {void}
+   */
+  navigateToCreateProduct(): void {
+    this.router.navigate(['/createProduct']);
+  }
+
+  /**
+   * Navigates to the product editing page for a specific product.
+   * Uses Angular Router to navigate to 'edit/{id}' route.
+   * @param {number} id - ID of the product to edit
+   * @returns {void}
+   */
+  navigateToEditProduct(id: number): void {
+    this.router.navigate(['edit/' + id]);
+  }
+
+  /**
+   * Deletes a product by ID and updates local products list.
+   * - Calls productService.deleteProduct() to delete from server
+   * - On success, removes product from local products array
+   * - Handles errors with console logging
+   * 
+   * @param {number} id - ID of the product to delete
+   * @returns {void}
+   */
+  deleteProduct(id: number): void {
+    // Guard clause for invalid ID
+    if (!id) {
+      return;
+    }
+
+    this.productService.deleteProduct(id).subscribe({
+      next: () => {
+        // Update local products array by filtering out deleted product
+        this.products = this.products.filter(p => p.id !== id);
+      },
+      error: (err: any) => {
+        console.error('Error deleting product:', err);
+        // Optional error handling can be added here
+      }
+    });
   }
 }
