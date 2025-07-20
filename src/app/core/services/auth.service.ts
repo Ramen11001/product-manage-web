@@ -41,14 +41,15 @@ export class AuthService {
   login(user: any): Observable<any> {
     return this.http.post(`${this.baseUrl}/auth/login`, user);
   }
- /**
+  /**
    * In charge of storing elements of the user model.
    *
    * @function
    */
-  saveAuthData(token: string, username: string): void {
+  saveAuthData(token: string, username: string, userId: number): void {
     localStorage.setItem('token', token);
     localStorage.setItem('username', username);
+    localStorage.setItem('userId', userId.toString());
   }
   /**
    * Logs out the user by removing the stored token and redirecting to the login page.
@@ -89,26 +90,16 @@ export class AuthService {
     const token = this.getToken();
     return !!token; // Cheek if token exist
   }
- 
 
-      getCurrentUserId(): number | null {
-    const token = this.getToken();
-    if (!token) return null;
-    try {
-       const base64Url = token.split('.')[1];
-      const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-      const payload = JSON.parse(decodeURIComponent(
-        atob(base64)
-          .split('')
-          .map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
-          .join('')
-      ));
-    
-     return payload.userId || payload.id || payload.sub; 
-    } catch (e) {
-      console.error('Error decoding token', e);
-      return null;
-    }
+  /**
+   * Retrieves the current user's ID from localStorage.
+   * This is more secure than decoding the JWT token on the client side.
+   *
+   * @function
+   * @returns {number | null} - Returns the user ID if available, otherwise null.
+   */
+  getCurrentUserId(): number | null {
+    const userId = localStorage.getItem('userId');
+    return userId ? parseInt(userId, 10) : null;
   }
-
 }

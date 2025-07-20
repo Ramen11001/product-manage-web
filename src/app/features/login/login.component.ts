@@ -99,14 +99,16 @@ export class LoginComponent {
        * @param {object} response - The server's response containing the token.
        */
       next: (response) => {
+        console.log('Respuesta completa:', response);
         const token = response.token;
-        const username = response.user.username;
-        if (!token || !username) {
+        const username = response.user?.username;
+        const userId = response.user?.id;
+        if (!token || !username || !userId) {
           console.error('Datos faltantes en respuesta:', response);
           return;
         }
 
-        this.authService.saveAuthData(token, username);
+        this.authService.saveAuthData(token, username, userId);
         this.router.navigate(['/product']);
         this.loading = false;
       },

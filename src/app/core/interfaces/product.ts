@@ -28,10 +28,10 @@ export interface Product {
    */
   price: number;
   /**
-     * User id of the product.
-     * @type {number}
-     */
-  userId: number
+   * User id of the product.
+   * @type {number}
+   */
+  userId: number;
   /**
    * List of user comments associated with the product.
    * @type {Comment[]}

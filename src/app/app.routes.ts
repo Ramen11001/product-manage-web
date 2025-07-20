@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 import { LoginComponent } from './features/login/login.component';
 import { authGuard } from './core/guards/auth.guard';
-import { ProductComponent } from './features/product/product.component'
+import { ProductComponent } from './features/product/product.component';
 import { CreateProductComponent } from './features/productManage/createProduct/createProduct.component';
 import { EditProductComponent } from './features/productManage/edit-product/editproduct.component';
 
@@ -43,15 +43,12 @@ export const routes: Routes = [
     component: ProductComponent,
     canActivate: [authGuard],
   },
-   {
+  {
     path: 'createProduct',
-    component:  CreateProductComponent,
-   
+    component: CreateProductComponent,
   },
-   {
-  path: 'edit/:id',
-   component: EditProductComponent
+  {
+    path: 'edit/:id',
+    component: EditProductComponent,
   },
-
-  
 ];
