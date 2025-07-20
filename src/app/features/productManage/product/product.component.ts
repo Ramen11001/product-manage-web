@@ -9,6 +9,7 @@ import { finalize } from 'rxjs';
 import { ProductsService } from 'src/app/core/services/products.service';
 import { Product } from 'src/app/core/interfaces/product';
 import { ReactiveFormsModule, FormGroup, FormControl } from '@angular/forms';
+
 /**
  * Component representing the product view and functionalities.
  *
@@ -59,7 +60,11 @@ export class ProductComponent implements OnInit {
    *
    * @type {number}
    */
+<<<<<<< HEAD
   itemsPerPage: number = 12;
+=======
+  itemsPerPage: number = 13;
+>>>>>>> 17e8e9b5538e04b5f6a5bc7ab3bcb4e388a03d94
   /**
    * Indicates whether there are more products to fetch beyond the current page.
    *
