@@ -225,4 +225,22 @@ export class ProductComponent implements OnInit {
       }
     });
   }
+
+/**
+     * Handles form submission.
+     * - Call logout function for  logs out the user by removing the stored token
+     * - if it is correct it presents the elements,
+     * - if not, it returns to the login and does not let you enter /products
+     
+     *
+     * @function
+     */
+  submit() {
+    this.authService.logout();
+    this.products = [];
+    this.username = null;
+    this.isLoading = false;
+    this.router.navigate(['/login']);
+
+}
 }
