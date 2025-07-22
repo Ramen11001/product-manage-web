@@ -28,4 +28,12 @@ export interface Comment {
    * @type {number}
    */
   productId: number;
+  createdAt?: string;
+  /**
+   * Identifier of the user name.
+   * @type {number}
+   */
+  user?: {
+    username?: string;
+  };
 }
