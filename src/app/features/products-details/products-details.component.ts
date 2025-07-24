@@ -89,15 +89,13 @@ export class ProductsDetailsComponent implements OnInit {
     return;
   }
 
-  
-  
-  // Convert rating to number type for API
-      const formValue = {
-        ... this.commentForm.value,
-       rating: Number(this.formValue.value.rating),
-      };
+ const commentData = {
+    text: this.commentForm.value.text,
+    rating: Number(this.commentForm.value.rating), // Convertir a número
+    productId: this.product.id
+  };
 
-  this.commentsService.createComment(formValue).subscribe({
+  this.commentsService.createComment(null, commentData).subscribe({
     next: (comment) => {
       this.comments.unshift(comment);
       this.commentForm.reset({ text: '', rating: 5 });
