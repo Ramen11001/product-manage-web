@@ -16,7 +16,6 @@ import { ProductsService } from 'src/app/core/services/products.service';
   selector: 'app-create-product',
   standalone: true,
   templateUrl: './createProduct.component.html',
-  styleUrls: ['./createProduct.component.scss'],
   imports: [CommonModule, ReactiveFormsModule, FormsModule],
 })
 export class CreateProductComponent {

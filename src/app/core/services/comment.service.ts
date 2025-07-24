@@ -1,0 +1,92 @@
+import { Injectable, inject } from '@angular/core';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpHeaders,
+} from '@angular/common/http';
+import { catchError, Observable, throwError } from 'rxjs';
+import { environment } from 'src/environments/environment';
+import { Comment } from 'src/app/core/interfaces/comment';
+import { AuthService } from './auth.service';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class CommentsService {
+  private apiUrl = `${environment.baseUrl}/comments`;
+  private http = inject(HttpClient);
+  private authService = inject(AuthService);
+
+  /**
+   * Fetches comments for a specific product.
+   * - Sends HTTP GET request to `/comments` endpoint with productId filter
+   * - Includes error handling for failed requests
+   *
+   * @function
+   * @param {number} productId - ID of the product to get comments for
+   * @returns {Observable<Comment[]>} Observable containing array of comments
+   */
+  getCommentsByProduct(productId: number): Observable<Comment[]> {
+    return this.http
+      .get<Comment[]>(`${this.apiUrl}?productId=${productId}`)
+      .pipe(catchError(this.handleError));
+  }
+
+  /**
+   * Creates or updates a comment.
+   * - For new comments: Assigns current user as comment owner
+   * - Validates user authentication before proceeding
+   * - Handles both create and update operations based on ID presence
+   *
+   * @function
+   * @param {number | null} id - Comment ID (null for new comments)
+   * @param {Omit<Comment, 'userId' | 'id'>} commentData - Comment data without user or ID fields
+   * @returns {Observable<Comment>} Observable containing saved comment
+   * @throws {Error} If user is not authenticated
+   */
+  createComment(
+    id: number | null,
+    commentData: Omit<Comment, 'userId' | 'id'>,
+  ): Observable<Comment> {
+    const userId = this.authService.getCurrentUserId();
+    if (!userId) {
+      return throwError(() => new Error('Usuario no autenticado'));
+    }
+
+    const fullCommentData: Partial<Comment> = {
+      ...commentData,
+      userId: userId,
+    };
+
+    if (id !== null) {
+      fullCommentData.id = id;
+    }
+
+    return this.http
+      .post<Comment>(this.apiUrl, fullCommentData)
+      .pipe(catchError(this.handleError));
+  }
+
+  private handleError(error: HttpErrorResponse) {
+    return throwError(
+      () => new Error('Ocurrió un error al procesar la solicitud'),
+    );
+  }
+
+  /**
+   * Deletes a comment by ID.
+   * - Validates comment ID is provided
+   * - Sends HTTP DELETE request to comments endpoint
+   *
+   * @function
+   * @param {number} id - ID of the comment to delete
+   * @returns {Observable<void>} Empty observable on success
+   * @throws {Error} If comment ID is invalid
+   */
+  deleteComment(id: number): Observable<void> {
+    if (!id) {
+      return throwError(() => new Error('ID de comentario inválido'));
+    }
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
+}

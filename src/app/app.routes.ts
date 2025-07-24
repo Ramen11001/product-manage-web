@@ -5,6 +5,7 @@ import { ProductComponent } from './features/product/product.component';
 import { CreateProductComponent } from './features/productManage/createProduct/createProduct.component';
 import { EditProductComponent } from './features/productManage/edit-product/editproduct.component';
 
+import { ProductsDetailsComponent } from './features/products-details/products-details.component'; 
 /**
  * Defines the application routes and their associated components.
  *
@@ -42,6 +43,10 @@ export const routes: Routes = [
     path: 'product',
     component: ProductComponent,
     canActivate: [authGuard],
+  },
+  {
+    path: 'productsDetails/:id',
+    component: ProductsDetailsComponent,
   },
   {
     path: 'createProduct',
