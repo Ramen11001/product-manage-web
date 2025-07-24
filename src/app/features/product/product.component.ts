@@ -181,6 +181,11 @@ export class ProductComponent implements OnInit {
     }
   }
 
+
+navigateToDetailsProduct(id: number): void {
+    this.router.navigate(['/productsDetails/' + id]);
+  }
+
   /**
    * Navigates to the product creation page.
    * Uses Angular Router to navigate to '/createProduct' route.
@@ -214,7 +219,7 @@ export class ProductComponent implements OnInit {
     if (!id) {
       return;
     }
-
+ 
     this.productService.deleteProduct(id).subscribe({
       next: () => {
         // Update local products array by filtering out deleted product

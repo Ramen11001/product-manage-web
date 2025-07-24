@@ -23,20 +23,22 @@ export class CommentsService {
       .pipe(catchError(this.handleError));
   }
 
-  createComment(comment: any): Observable<Comment> {
+  createComment(id: number | null, commentData?: Omit<Comment, 'userId'>): Observable<Comment> {
+    const userId = this.authService.getCurrentUserId();
+     if (!userId) {
+            return throwError(() => new Error('Usuario no autenticado'));
+          }
+          const fullcommentDataData: Comment = {
+            ...commentData!,
+            userId: userId,
+          };
     return this.http
-      .post<Comment>(`${this.apiUrl}/comments`, comment, {
-        headers: {
-          'Content-Type': 'application/json',
-
-          Authorization: `Bearer ${this.authService.getToken()}`,
-        },
+      .post<Comment>(`${this.apiUrl}`, fullcommentDataData, {
       })
       .pipe(catchError(this.handleError));
   }
 
   private handleError(error: HttpErrorResponse) {
-    console.error('Error en la petición:', error);
     return throwError(
       () => new Error('Ocurrió un error al procesar la solicitud'),
     );

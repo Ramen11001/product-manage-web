@@ -21,6 +21,7 @@ export class ProductsDetailsComponent implements OnInit {
   commentForm: FormGroup;
   isLoading = true;
   error: string | null = null;
+  formValue: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -65,11 +66,8 @@ export class ProductsDetailsComponent implements OnInit {
  loadComments(productId: number): void {
   this.commentsService.getCommentsByProduct(productId).subscribe({
     next: (comments) => {
-      // Si los comentarios no vienen con user, puedes cargarlos aquí
       this.comments = comments.map(comment => {
         if (comment.userId && !comment.user) {
-          // Lógica para cargar usuario si es necesario
-          // this.loadUserDetails(comment.userId).then(user => comment.user = user);
         }
         return comment;
       });
@@ -91,16 +89,15 @@ export class ProductsDetailsComponent implements OnInit {
     return;
   }
 
-  // Solución con type assertion
-  const formValue = this.commentForm.value as { text: string; rating: number };
   
-  const newComment: Omit<Comment, 'id' | 'userId' | 'createdAt' | 'updatedAt'> = {
-    text: formValue.text,
-    rating: formValue.rating,
-    productId: this.product.id
-  };
+  
+  // Convert rating to number type for API
+      const formValue = {
+        ... this.commentForm.value,
+       rating: Number(this.formValue.value.rating),
+      };
 
-  this.commentsService.createComment(newComment).subscribe({
+  this.commentsService.createComment(formValue).subscribe({
     next: (comment) => {
       this.comments.unshift(comment);
       this.commentForm.reset({ text: '', rating: 5 });
