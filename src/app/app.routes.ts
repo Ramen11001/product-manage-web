@@ -2,7 +2,7 @@ import { Routes } from '@angular/router';
 import { LoginComponent } from './features/login/login.component';
 import { authGuard } from './core/guards/auth.guard';
 import { ProductComponent } from './features/product/product.component'
-import { ProductsDetailsComponent } from './features/productManage/products-details/products-details/products-details.component';
+import { ProductsDetailsComponent } from './features/products-details/products-details.component'; 
 /**
  * Defines the application routes and their associated components.
  *
