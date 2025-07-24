@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { finalize } from 'rxjs';
-import { ProductService } from 'src/app/core/services/product.service';
+import { ProductsService } from 'src/app/core/services/products.service';
 import { Product } from 'src/app/core/interfaces/product';
 import { ReactiveFormsModule, FormGroup, FormControl } from '@angular/forms';
 
@@ -34,6 +34,7 @@ export class ProductComponent implements OnInit {
    * @type {string}
    */
   filterName: string = '';
+
   /**
    * Stores the minimum price filter.
    * @type {number | null}
@@ -71,7 +72,7 @@ export class ProductComponent implements OnInit {
   // Dependency injection for required services
   authService: AuthService = inject(AuthService);
   cdr: ChangeDetectorRef = inject(ChangeDetectorRef);
-  productService: ProductService = inject(ProductService);
+  productService: ProductsService = inject(ProductsService);
 
   //Reactive Form
   filterForm: FormGroup = new FormGroup({
@@ -179,7 +180,54 @@ export class ProductComponent implements OnInit {
       this.changePage(this.currentPage - 1);
     }
   }
+
   /**
+   * Navigates to the product creation page.
+   * Uses Angular Router to navigate to '/createProduct' route.
+   * @returns {void}
+   */
+  navigateToCreateProduct(): void {
+    this.router.navigate(['/createProduct']);
+  }
+
+  /**
+   * Navigates to the product editing page for a specific product.
+   * Uses Angular Router to navigate to 'edit/{id}' route.
+   * @param {number} id - ID of the product to edit
+   * @returns {void}
+   */
+  navigateToEditProduct(id: number): void {
+    this.router.navigate(['edit/' + id]);
+  }
+
+  /**
+   * Deletes a product by ID and updates local products list.
+   * - Calls productService.deleteProduct() to delete from server
+   * - On success, removes product from local products array
+   * - Handles errors with console logging
+   * 
+   * @param {number} id - ID of the product to delete
+   * @returns {void}
+   */
+  deleteProduct(id: number): void {
+    // Guard clause for invalid ID
+    if (!id) {
+      return;
+    }
+
+    this.productService.deleteProduct(id).subscribe({
+      next: () => {
+        // Update local products array by filtering out deleted product
+        this.products = this.products.filter(p => p.id !== id);
+      },
+      error: (err: any) => {
+        console.error('Error deleting product:', err);
+        // Optional error handling can be added here
+      }
+    });
+  }
+
+/**
      * Handles form submission.
      * - Call logout function for  logs out the user by removing the stored token
      * - if it is correct it presents the elements,
@@ -194,5 +242,6 @@ export class ProductComponent implements OnInit {
     this.username = null;
     this.isLoading = false;
     this.router.navigate(['/login']);
-  }
+
+}
 }

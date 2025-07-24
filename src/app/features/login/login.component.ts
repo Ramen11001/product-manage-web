@@ -1,4 +1,3 @@
-//DESPUÉS DE AUTENTICARME, NO ME LLEVA AL PRODUCT
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
@@ -60,7 +59,7 @@ export class LoginComponent {
   constructor(
     private authService: AuthService,
     private router: Router,
-  ) {}
+  ) { }
 
   /**
    * Handles form submission and authentication.
@@ -101,13 +100,14 @@ export class LoginComponent {
        */
       next: (response) => {
         const token = response.token;
-        const username = response.user.username;
-        if (!token || !username) {
+        const username = response.user?.username;
+        const userId = response.user?.id;
+        if (!token || !username || !userId) {
           console.error('Datos faltantes en respuesta:', response);
           return;
         }
 
-        this.authService.saveAuthData(token, username);
+        this.authService.saveAuthData(token, username, userId);
         this.router.navigate(['/product']);
         this.loading = false;
       },
