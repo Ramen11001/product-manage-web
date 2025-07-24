@@ -1,0 +1,76 @@
+<!-- Title -->
+<div class="container-md">
+  <div class="py-5 text-center">
+    <h3 class="text-dark">Crear Producto</h3>
+  </div>
+
+  <!-- Form -->
+  <div class="row">
+    <div class="col-12 order-md-1">
+      <h4 class="mb-3">Recuerde rellenar todos los campos.</h4>
+      <form [formGroup]="productForm" (ngSubmit)="onSubmit()" class="elements">
+        <div class="row">
+          <div class="col-md-6 col-sm-12 mb-3">
+            <label for="name">Nombre del Producto</label>
+            <input type="text" class="form-control" id="name" formControlName="name"
+              placeholder="nombre del producto" />
+            <div *ngIf="productForm.get('name')?.invalid && 
+                 (productForm.get('name')?.dirty || 
+                  productForm.get('name')?.touched)" class="text-danger">
+              <small *ngIf="productForm.get('name')?.errors?.['required']">
+                El nombre del producto es requerido.
+              </small>
+              <small *ngIf="productForm.get('name')?.errors?.['minlength']">
+                El nombre debe tener al menos 3 caracteres.
+              </small>
+            </div>
+          </div>
+
+          <div class="col-md-6 col-sm-12 mb-3">
+            <label for="price">Precio</label>
+            <input type="number" class="form-control" id="price" formControlName="price" placeholder="$0.0" />
+            <div *ngIf="productForm.get('price')?.invalid && 
+                 (productForm.get('price')?.dirty || 
+                  productForm.get('price')?.touched)" class="text-danger">
+              <small *ngIf="productForm.get('price')?.errors?.['required']">
+                El precio es requerido.
+              </small>
+              <small *ngIf="productForm.get('price')?.errors?.['min']">
+                El precio debe ser mayor o igual a 0.
+              </small>
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="description">Descripción</label>
+          <textarea type="text" class="form-control " id="description" formControlName="description"
+            placeholder="descripción del producto (opcional)">
+    </textarea>
+
+          <div *ngIf="productForm.get('description')?.invalid &&
+               (productForm.get('description')?.dirty || 
+                productForm.get('description')?.touched)" class="text-danger">
+            <small *ngIf="productForm.get('description')?.errors?.['minlength']">
+              La descripción debe tener al menos 10 caracteres.
+            </small>
+          </div>
+        </div>
+
+        <hr class="mb-4">
+        <button class="btn btn-primary btn-lg btn-block" type="submit" [disabled]="isLoading || productForm.invalid">
+          <span *ngIf="!isLoading">Confirmar</span>
+          <span *ngIf="isLoading">
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            Procesando...
+          </span>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="my-5 pt-5 text-muted text-center text-small">
+    <p class="mb-1">© Mi primera web :3</p>
+  </footer>
+</div>
