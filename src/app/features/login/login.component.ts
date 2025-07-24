@@ -59,7 +59,7 @@ export class LoginComponent {
   constructor(
     private authService: AuthService,
     private router: Router,
-  ) {}
+  ) { }
 
   /**
    * Handles form submission and authentication.
@@ -99,7 +99,6 @@ export class LoginComponent {
        * @param {object} response - The server's response containing the token.
        */
       next: (response) => {
-        console.log('Respuesta completa:', response);
         const token = response.token;
         const username = response.user?.username;
         const userId = response.user?.id;
