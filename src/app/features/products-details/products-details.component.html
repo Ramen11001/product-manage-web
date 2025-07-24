@@ -1,5 +1,11 @@
 <div *ngIf="!isLoading; else loading" class="container mx-auto p-4">
   <div *ngIf="product; else noProduct">
+     <!-- Botón para regresar -->
+    <div class="mb-3">
+      <button (click)="navigateToProduct()" class="btn btn-outline-secondary">
+        <i class="bi bi-arrow-left me-2"></i> Volver a productos
+      </button>
+    </div>
     <!-- Product details -->
     <div class="card border card_border m-2">
       <div class="card-body text-black">

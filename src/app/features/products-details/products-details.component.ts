@@ -162,4 +162,9 @@ export class ProductsDetailsComponent implements OnInit {
       },
     });
   }
+
+navigateToProduct() {
+    this.router.navigate(['/product']);
+  }
+
 }
