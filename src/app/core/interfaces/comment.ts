@@ -7,6 +7,11 @@
  */
 export interface Comment {
   /**
+   * Unique identifier for the comment.
+   * @type {number}
+   */
+  id?: number;
+  /**
    * Rating given by the user (usually between 1-5 stars).
    * @type {number}
    */
