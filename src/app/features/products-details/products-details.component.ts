@@ -23,7 +23,7 @@ import { AuthService } from 'src/app/core/services/auth.service';
 export class ProductsDetailsComponent implements OnInit {
   product: Product | null = null;
   comments: Comment[] = [];
-  users: User[]=[];
+  users: User[] = [];
   commentForm: FormGroup;
   isLoading = true;
   error: string | null = null;
@@ -120,7 +120,7 @@ export class ProductsDetailsComponent implements OnInit {
     const commentData = {
       text: this.commentForm.value.text,
       rating: Number(this.commentForm.value.rating),
-      productId: this.product.id,      
+      productId: this.product.id,
     }
 
     this.commentsService.createComment(null, commentData).subscribe({

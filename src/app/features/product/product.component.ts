@@ -9,7 +9,6 @@ import { finalize } from 'rxjs';
 import { ProductsService } from 'src/app/core/services/products.service';
 import { Product } from 'src/app/core/interfaces/product';
 import { ReactiveFormsModule, FormGroup, FormControl } from '@angular/forms';
-
 /**
  * Component representing the product view and functionalities.
  *
@@ -67,6 +66,12 @@ export class ProductComponent implements OnInit {
    * @type {boolean}
    */
   hasMore = false;
+  /**
+    * Current User.
+    *
+    * @type {number}
+    */
+  currentUserId: number | null = null;
 
   isLoading: boolean = true;
   // Dependency injection for required services
@@ -100,6 +105,7 @@ export class ProductComponent implements OnInit {
     } else {
       const storedUsername = this.authService.getUsername();
       this.username = storedUsername || 'Usuario';
+      this.currentUserId = this.authService.getCurrentUserId();
       this.getProducts();
 
       this.filterForm.valueChanges.subscribe((_values) => {
@@ -181,12 +187,12 @@ export class ProductComponent implements OnInit {
     }
   }
 
-/**
-   * Navigates to the product details page.
-   * Uses Angular Router to navigate to 'productsDetails/{id}' route.
-   * @returns {void}
-   */
-navigateToDetailsProduct(id: number): void {
+  /**
+     * Navigates to the product details page.
+     * Uses Angular Router to navigate to 'productsDetails/{id}' route.
+     * @returns {void}
+     */
+  navigateToDetailsProduct(id: number): void {
     this.router.navigate(['/productsDetails/' + id]);
   }
 
@@ -223,7 +229,7 @@ navigateToDetailsProduct(id: number): void {
     if (!id) {
       return;
     }
- 
+
     this.productService.deleteProduct(id).subscribe({
       next: () => {
         // Update local products array by filtering out deleted product
@@ -236,15 +242,15 @@ navigateToDetailsProduct(id: number): void {
     });
   }
 
-/**
-     * Handles form submission.
-     * - Call logout function for  logs out the user by removing the stored token
-     * - if it is correct it presents the elements,
-     * - if not, it returns to the login and does not let you enter /products
-     
-     *
-     * @function
-     */
+  /**
+       * Handles form submission.
+       * - Call logout function for  logs out the user by removing the stored token
+       * - if it is correct it presents the elements,
+       * - if not, it returns to the login and does not let you enter /products
+       
+       *
+       * @function
+       */
   submit() {
     this.authService.logout();
     this.products = [];
@@ -252,5 +258,5 @@ navigateToDetailsProduct(id: number): void {
     this.isLoading = false;
     this.router.navigate(['/login']);
 
-}
+  }
 }

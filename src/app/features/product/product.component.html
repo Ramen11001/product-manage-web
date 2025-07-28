@@ -52,11 +52,12 @@
               <p class="price"><strong>Precio:</strong> ${{ product.price }}</p>
               <div class="fw-bold  ms-5">
                 <!-- Botón para abrir modal -->
-                <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                  [attr.data-bs-target]="'#deleteModal'+product.id">
-                  Eliminar
-                </button>
-
+                <ng-container *ngIf="currentUserId !== null">
+                  <button type="button" *ngIf="currentUserId === product.userId" class="btn btn-danger"
+                    data-bs-toggle="modal" [attr.data-bs-target]="'#deleteModal'+product.id">
+                    Eliminar
+                  </button>
+                </ng-container>
                 <!-- Modal de confirmación -->
                 <div class="modal fade" [id]="'deleteModal'+product.id" tabindex="-1">
                   <div class="modal-dialog">
@@ -80,10 +81,16 @@
                   </div>
                 </div>
               </div>
-              <a class="btn text-white fw-bold btn_settings_1 ms-5" (click)="navigateToEditProduct(product.id)"> Editar
-                Producto </a>
-                <a class="btn text-white fw-bold btn_settings_1 ms-5" (click)="navigateToDetailsProduct(product.id)"> Detalles del
-                Producto </a>
+
+              <ng-container *ngIf="currentUserId !== null">
+                <button *ngIf="currentUserId === product.userId" (click)="navigateToEditProduct(product.id)"
+                  class="btn text-white fw-bold btn_settings_1 ms-5"> Editar
+                  Producto </button>
+              </ng-container>
+              <button class="btn text-white fw-bold btn_settings_1 ms-5" (click)="navigateToDetailsProduct(product.id)">
+                Detalles del
+                Producto </button>
+
             </div>
           </div>
 

@@ -45,7 +45,7 @@ export class CommentsService {
    */
   createComment(
     id: number | null,
-    commentData: Omit<Comment, 'userId' | 'id'| 'user'>,
+    commentData: Omit<Comment, 'userId' | 'id' | 'user'>,
   ): Observable<Comment> {
     const userId = this.authService.getCurrentUserId();
     if (!userId) {
