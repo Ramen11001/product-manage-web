@@ -28,6 +28,7 @@ export class ProductsDetailsComponent implements OnInit {
   isLoading = true;
   error: string | null = null;
   formValue: any;
+  currentUserId: number | null = null;
 
   constructor(
     private route: ActivatedRoute,
@@ -50,6 +51,7 @@ export class ProductsDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     const productId = this.route.snapshot.paramMap.get('id');
+    this.currentUserId = this.authService.getCurrentUserId();
     if (productId) {
       this.loadProduct(parseInt(productId));
     } else {
@@ -67,6 +69,7 @@ export class ProductsDetailsComponent implements OnInit {
    */
   loadProduct(id: number): void {
     this.isLoading = true;
+
     this.productsService.getProductId(id).subscribe({
       next: (product) => {
         this.product = product;

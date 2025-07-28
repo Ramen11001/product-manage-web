@@ -1,6 +1,6 @@
 <div *ngIf="!isLoading; else loading" class="container mx-auto p-4">
   <div *ngIf="product; else noProduct">
-     <!-- Return button -->
+    <!-- Return button -->
     <div class="mb-3">
       <button (click)="navigateToProduct()" class="btn btn-outline-secondary">
         <i class="bi bi-arrow-left me-2"></i> Volver a productos
@@ -100,10 +100,12 @@
             </span>
 
 
-            <button type="button" class="btn btn-sm btn-outline-danger ms-2" data-bs-toggle="modal"
-              [attr.data-bs-target]="'#deleteCommentModal' + comment.id">
-              <i class="bi bi-trash"></i>
-            </button>
+            <ng-container *ngIf="currentUserId !== null">
+              <button type="button" *ngIf="currentUserId === comment.userId" class="btn btn-sm btn-outline-danger ms-2"
+                data-bs-toggle="modal" [attr.data-bs-target]="'#deleteCommentModal' + comment.id">
+                <i class="bi bi-trash"></i>
+              </button>
+            </ng-container>
           </div>
           <p class="mb-0">{{ comment.text }}</p>
 
@@ -123,14 +125,19 @@
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                     Cancelar
                   </button>
-                  <button type="button" class="btn btn-danger" (click)="comment.id && deleteComment(comment.id)"
-                    data-bs-dismiss="modal" [disabled]="!comment.id">
-                    Eliminar
+
+
+                  <button type="button" class="btn btn-sm btn-outline-danger ms-2" data-bs-toggle="modal"
+                    [attr.data-bs-target]="'#deleteCommentModal' + comment.id">
+                    <i class="bi bi-trash"></i>
                   </button>
+
                 </div>
               </div>
             </div>
           </div>
+
+
         </div>
       </div>
     </div>
