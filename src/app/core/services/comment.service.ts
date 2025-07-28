@@ -33,10 +33,9 @@ export class CommentsService {
   }
 
   /**
-   * Creates or updates a comment.
+   * Creates a comment.
    * - For new comments: Assigns current user as comment owner
    * - Validates user authentication before proceeding
-   * - Handles both create and update operations based on ID presence
    *
    * @function
    * @param {number | null} id - Comment ID (null for new comments)
@@ -46,7 +45,7 @@ export class CommentsService {
    */
   createComment(
     id: number | null,
-    commentData: Omit<Comment, 'userId' | 'id'>,
+    commentData: Omit<Comment, 'userId' | 'id'| 'user'>,
   ): Observable<Comment> {
     const userId = this.authService.getCurrentUserId();
     if (!userId) {
@@ -67,6 +66,17 @@ export class CommentsService {
       .pipe(catchError(this.handleError));
   }
 
+  /**
+   * Centralized error handling for HTTP requests.
+   * - Intercepts HTTP error responses from all service methods
+   * - Converts technical errors into user-friendly messages
+   * - Returns a throwable observable with standardized error message
+   *
+   * @function
+   * @private
+   * @param {HttpErrorResponse} error - Original error response from HttpClient
+   * @returns {Observable<never>} Observable that immediately errors with simplified message
+   */
   private handleError(error: HttpErrorResponse) {
     return throwError(
       () => new Error('Ocurrió un error al procesar la solicitud'),

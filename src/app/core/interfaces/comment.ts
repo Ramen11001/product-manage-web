@@ -1,3 +1,5 @@
+
+import { User } from "./user";
 /**
  * Interface representing a user comment on a product.
  *
@@ -33,12 +35,17 @@ export interface Comment {
    * @type {number}
    */
   productId: number;
-  createdAt?: string;
+
   /**
-   * Identifier of the user name.
-   * @type {number}
-   */
-  user?: {
-    username?: string;
-  };
+     * Date the comment was created
+     * @type {string}
+     */
+  createdAt?: string;
+
+
+  /**
+  * user associated with the comment.
+  * @type {User}
+  */
+  user:  Partial<User>  ;
 }

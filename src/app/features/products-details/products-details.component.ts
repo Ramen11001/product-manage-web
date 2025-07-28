@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
-//Algunas cosas no funcionan porque falta mergear la otra rama
 import { ProductsService } from 'src/app/core/services/products.service';
 import { Product } from 'src/app/core/interfaces/product';
 import { Comment } from 'src/app/core/interfaces/comment';
+import { User } from 'src/app/core/interfaces/user';
 import { CommentsService } from 'src/app/core/services/comment.service';
 import {
   FormBuilder,
@@ -23,6 +23,7 @@ import { AuthService } from 'src/app/core/services/auth.service';
 export class ProductsDetailsComponent implements OnInit {
   product: Product | null = null;
   comments: Comment[] = [];
+  users: User[]=[];
   commentForm: FormGroup;
   isLoading = true;
   error: string | null = null;
@@ -119,8 +120,8 @@ export class ProductsDetailsComponent implements OnInit {
     const commentData = {
       text: this.commentForm.value.text,
       rating: Number(this.commentForm.value.rating),
-      productId: this.product.id,
-    };
+      productId: this.product.id,      
+    }
 
     this.commentsService.createComment(null, commentData).subscribe({
       next: (comment) => {
@@ -163,7 +164,12 @@ export class ProductsDetailsComponent implements OnInit {
     });
   }
 
-navigateToProduct() {
+  /**
+   * Navigates to the product page.
+   * Uses Angular Router to navigate to '/product' route.
+   * @returns {void}
+   */
+  navigateToProduct() {
     this.router.navigate(['/product']);
   }
 

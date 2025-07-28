@@ -181,7 +181,11 @@ export class ProductComponent implements OnInit {
     }
   }
 
-
+/**
+   * Navigates to the product details page.
+   * Uses Angular Router to navigate to 'productsDetails/{id}' route.
+   * @returns {void}
+   */
 navigateToDetailsProduct(id: number): void {
     this.router.navigate(['/productsDetails/' + id]);
   }
