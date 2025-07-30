@@ -90,22 +90,20 @@ export class ProductsDetailsComponent implements OnInit {
    * @param {number} productId - ID of the product to load comments for
    */
   loadComments(productId: number): void {
-    this.commentsService.getCommentsByProduct(productId).subscribe({
-      next: (comments) => {
-        this.comments = comments.map((comment) => {
-          if (comment.userId && !comment.user) {
-          }
-          return comment;
-        });
-        this.isLoading = false;
-      },
-      error: (err) => {
-        this.error = 'Error al cargar los comentarios';
-        this.isLoading = false;
-        console.error(err);
-      },
-    });
-  }
+  this.isLoading = true;
+  
+  this.commentsService.getCommentsByProduct(productId).subscribe({
+    next: (comments) => {
+      this.comments = comments;
+      this.isLoading = false;
+    },
+    error: (err) => {
+      this.error = 'Error al cargar los comentarios';
+      this.isLoading = false;
+      console.error(err);
+    }
+  });
+}
   /**
    * Handles comment form submission.
    * - Validates form and authentication

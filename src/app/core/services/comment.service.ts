@@ -27,10 +27,12 @@ export class CommentsService {
    * @returns {Observable<Comment[]>} Observable containing array of comments
    */
   getCommentsByProduct(productId: number): Observable<Comment[]> {
-    return this.http
-      .get<Comment[]>(`${this.apiUrl}?productId=${productId}`)
-      .pipe(catchError(this.handleError));
-  }
+  return this.http
+    .get<Comment[]>(`${this.apiUrl}?productId=${productId}`)
+    .pipe(catchError(this.handleError));
+}
+
+  
 
   /**
    * Creates a comment.
