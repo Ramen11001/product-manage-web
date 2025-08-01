@@ -28,11 +28,9 @@ export class CommentsService {
    */
   getCommentsByProduct(productId: number): Observable<Comment[]> {
   return this.http
-    .get<Comment[]>(`${this.apiUrl}?productId=${productId}`)
+    .get<Comment[]>(`${this.apiUrl}/product/${productId}`)
     .pipe(catchError(this.handleError));
 }
-
-  
 
   /**
    * Creates a comment.

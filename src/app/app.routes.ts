@@ -5,7 +5,7 @@ import { ProductComponent } from './features/product/product.component';
 import { CreateProductComponent } from './features/productManage/createProduct/createProduct.component';
 import { EditProductComponent } from './features/productManage/edit-product/editproduct.component';
 
-import { ProductsDetailsComponent } from './features/products-details/products-details.component'; 
+import { ProductsDetailsComponent } from './features/products-details/products-details.component';
 /**
  * Defines the application routes and their associated components.
  *
@@ -20,7 +20,11 @@ export const routes: Routes = [
    *
    * @route /
    */
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  {
+    path: '',
+    redirectTo: 'login',
+    pathMatch: 'full'
+  },
 
   /**
    * Route for the login page.
@@ -29,7 +33,10 @@ export const routes: Routes = [
    * @route /login
    * @component LoginComponent
    */
-  { path: 'login', component: LoginComponent },
+  {
+    path: 'login',
+    component: LoginComponent
+  },
   /**
    * Route for the product.
    * Displays the `ProductComponent` after successful authentication.
@@ -44,14 +51,35 @@ export const routes: Routes = [
     component: ProductComponent,
     canActivate: [authGuard],
   },
+  /**
+  * Route for the products Details.
+  * Displays the `ProductsDetailsComponent` after successful authentication.
+  *
+  * @route /productsDetails/:id
+  * @component ProductsDetailsComponent
+  */
   {
     path: 'productsDetails/:id',
     component: ProductsDetailsComponent,
   },
+  /**
+  * Route for create a new product.
+  * Displays the `CreateProductComponent`.
+  *
+  * @route /createProduct
+  * @component CreateProductComponent
+  */
   {
     path: 'createProduct',
     component: CreateProductComponent,
   },
+  /**
+   * Route for edit a product.
+   * Displays the `EditProductComponent`.
+   *
+   * @route /edit/:id
+   * @component EditProductComponent
+   */
   {
     path: 'edit/:id',
     component: EditProductComponent,

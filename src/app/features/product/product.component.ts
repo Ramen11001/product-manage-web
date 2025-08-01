@@ -1,4 +1,3 @@
-// Import necessary modules and services for the component
 import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
