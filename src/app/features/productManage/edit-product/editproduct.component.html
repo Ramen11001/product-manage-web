@@ -1,5 +1,5 @@
 <div class="container-md">
- 
+
 
   <!-- Title -->
   <div class="py-5 text-center">
@@ -10,25 +10,25 @@
   <div class="row">
     <div class="col-12 order-md-1">
       <h4 class="mb-3">Recuerde rellenar el campo que desea editar.</h4>
-      
+
       <!--Loading message -->
       <div *ngIf="isLoading && !errorMessage" class="alert alert-info">
         <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
         Cargando información del producto...
       </div>
-      
+
       <!-- Message when permission is not granted -->
       <div *ngIf="!canEdit && !isLoading && !errorMessage" class="alert alert-warning">
         No tienes permiso para editar este producto. Redirigiendo...
       </div>
-      
+
       <!-- Form (only visible with permissions)-->
       <form *ngIf="canEdit" [formGroup]="productForm" (ngSubmit)="onSubmit()" class="elements">
         <div class="row">
           <div class="col-md-6 col-sm-12 mb-3">
             <label for="name">Nombre del Producto</label>
             <input type="text" class="form-control" id="name" formControlName="name"
-                   placeholder="nombre del producto" />
+              placeholder="nombre del producto" />
             <div *ngIf="productForm.get('name')?.invalid && 
                  (productForm.get('name')?.dirty || 
                   productForm.get('name')?.touched)" class="text-danger">
@@ -40,8 +40,8 @@
 
           <div class="col-md-6 col-sm-12 mb-3">
             <label for="price">Precio</label>
-            <input type="number" class="form-control" id="price"
-                   formControlName="price" placeholder="$0.0" min="0.01" step="0.01" />
+            <input type="number" class="form-control" id="price" formControlName="price" placeholder="$0.0" min="0.01"
+              step="0.01" />
             <div *ngIf="productForm.get('price')?.invalid && 
                  (productForm.get('price')?.dirty || 
                   productForm.get('price')?.touched)" class="text-danger">
@@ -54,8 +54,8 @@
 
         <div class="mb-3">
           <label for="description">Descripción</label>
-          <textarea class="form-control" id="description" formControlName="description"
-                   rows="4" placeholder="descripción del producto (opcional)"></textarea>
+          <textarea class="form-control" id="description" formControlName="description" rows="4"
+            placeholder="descripción del producto (opcional)"></textarea>
 
           <div *ngIf="productForm.get('description')?.invalid &&
                (productForm.get('description')?.dirty || 

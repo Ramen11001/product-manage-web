@@ -1,3 +1,5 @@
+
+import { User } from "./user";
 /**
  * Interface representing a user comment on a product.
  *
@@ -6,6 +8,11 @@
  * @class Comment
  */
 export interface Comment {
+  /**
+   * Unique identifier for the comment.
+   * @type {number}
+   */
+  id?: number;
   /**
    * Rating given by the user (usually between 1-5 stars).
    * @type {number}
@@ -28,4 +35,17 @@ export interface Comment {
    * @type {number}
    */
   productId: number;
+
+  /**
+     * Date the comment was created
+     * @type {string}
+     */
+  createdAt?: string;
+
+
+  /**
+  * user associated with the comment.
+  * @type {User}
+  */
+  user: Partial<User>;
 }
