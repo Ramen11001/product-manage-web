@@ -47,5 +47,5 @@ export interface Comment {
   * user associated with the comment.
   * @type {User}
   */
-  user: Partial<User>;
+  User: Partial<User>;
 }

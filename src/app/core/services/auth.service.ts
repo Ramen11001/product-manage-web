@@ -13,6 +13,9 @@ import { Router } from '@angular/router';
   providedIn: 'root',
 })
 export class AuthService {
+  getCurrentUserName() {
+    throw new Error('Method not implemented.');
+  }
   /**
    * Base URL for the authentication API, sourced from environment configuration.
    * @type {string}

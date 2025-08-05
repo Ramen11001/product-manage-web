@@ -96,6 +96,15 @@ export class EditProductComponent {
   }
 
   /**
+   * Navigates to the product page.
+   * Uses Angular Router to navigate to '/product' route.
+   * @returns {void}
+   */
+  navigateToProduct() {
+    this.router.navigate(['/product']);
+  }
+
+  /**
    * Handles form submission for product updates.
    * - Validates form inputs
    * - Converts price to number

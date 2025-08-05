@@ -23,7 +23,7 @@ import { AuthService } from 'src/app/core/services/auth.service';
 export class ProductsDetailsComponent implements OnInit {
   product: Product | null = null;
   comments: Comment[] = [];
-  users: User[] = [];
+  user: User[] = [];
   commentForm: FormGroup;
   isLoading = true;
   error: string | null = null;
@@ -90,20 +90,20 @@ export class ProductsDetailsComponent implements OnInit {
    * @param {number} productId - ID of the product to load comments for
    */
   loadComments(productId: number): void {
-  this.isLoading = true;
-  
-  this.commentsService.getCommentsByProduct(productId).subscribe({
-    next: (comments) => {
-      this.comments = comments;
-      this.isLoading = false;
-    },
-    error: (err) => {
-      this.error = 'Error al cargar los comentarios';
-      this.isLoading = false;
-      console.error(err);
-    }
-  });
-}
+    this.isLoading = true;
+
+    this.commentsService.getCommentsByProduct(productId).subscribe({
+      next: (comments) => {
+        this.comments = comments;
+        this.isLoading = false;
+      },
+      error: (err) => {
+        this.error = 'Error al cargar los comentarios';
+        this.isLoading = false;
+        console.error(err);
+      }
+    });
+  }
   /**
    * Handles comment form submission.
    * - Validates form and authentication
@@ -111,30 +111,42 @@ export class ProductsDetailsComponent implements OnInit {
    * - Resets form on success
    */
   onSubmit(): void {
-    if (this.commentForm.invalid || !this.product) return;
+  if (this.commentForm.invalid || !this.product) return;
 
-    if (!this.authService.isAuthenticated()) {
-      this.router.navigate(['/product']);
-      return;
-    }
-
-    const commentData = {
-      text: this.commentForm.value.text,
-      rating: Number(this.commentForm.value.rating),
-      productId: this.product.id,
-    }
-
-    this.commentsService.createComment(null, commentData).subscribe({
-      next: (comment) => {
-        this.comments.unshift(comment);
-        this.commentForm.reset({ text: '', rating: 5 });
-      },
-      error: (err) => {
-        this.error = 'Error al enviar el comentario';
-        console.error(err);
-      },
-    });
+  if (!this.authService.isAuthenticated()) {
+    this.router.navigate(['/product']);
+    return;
   }
+
+  const commentData = {
+    text: this.commentForm.value.text,
+    rating: Number(this.commentForm.value.rating),
+    productId: this.product.id,
+  }
+
+  this.commentsService.createComment(null, commentData).subscribe({
+    next: (comment) => {
+      // Si el backend no incluye el usuario, lo añadimos manualmente
+      if (!comment.User) {
+        comment.User = {
+          id: this.currentUserId!,
+          username: this.authService.getUsername() || 'Usuario actual'
+        }; 
+      }
+      
+      this.comments.unshift(comment);
+      this.commentForm.reset({ text: '', rating: 5 });
+      
+      // Elimina esta línea (ya no es necesaria):
+      // const productId = this.route.snapshot.paramMap.get('id');
+      // this.loadComments(parseInt(productId))
+    },
+    error: (err) => {
+      this.error = 'Error al enviar el comentario';
+      console.error(err);
+    },
+  });
+}
   /**
    * Checks if user is authenticated.
    * @returns {boolean} Authentication status

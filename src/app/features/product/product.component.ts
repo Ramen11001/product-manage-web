@@ -214,6 +214,10 @@ export class ProductComponent implements OnInit {
     this.router.navigate(['edit/' + id]);
   }
 
+   navigateToLogout(): void {
+   this.authService.logout()
+  }
+
   /**
    * Deletes a product by ID and updates local products list.
    * - Calls productService.deleteProduct() to delete from server

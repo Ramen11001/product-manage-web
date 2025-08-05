@@ -95,10 +95,9 @@
               </ng-container>
             </div>
             <span class="text-gray-500 text-sm">
-              {{ comment.user?.username || "Anónimo" }} •
+              {{ comment.User.username || "Anónimo" }} 
               {{ comment.createdAt | date: "mediumDate" }}
             </span>
-
 
             <ng-container *ngIf="currentUserId !== null">
               <button type="button" *ngIf="currentUserId === comment.userId" class="btn btn-sm btn-outline-danger ms-2"
@@ -107,10 +106,11 @@
               </button>
             </ng-container>
           </div>
+
+          <!-- Icon on the right -->
           <p class="mb-0">{{ comment.text }}</p>
 
-
-
+          <!-- Delete Comment -->
           <div class="modal fade" [id]="'deleteCommentModal' + comment.id" tabindex="-1">
             <div class="modal-dialog">
               <div class="modal-content">
@@ -125,12 +125,10 @@
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                     Cancelar
                   </button>
-
-
-                  <button type="button" class="btn btn-sm btn-outline-danger ms-2" data-bs-toggle="modal"
-                    [attr.data-bs-target]="'#deleteCommentModal' + comment.id">
-                    <i class="bi bi-trash"></i>
-                  </button>
+                   <button type="button" class="btn btn-danger" (click)="deleteComment(comment.id!)"
+                          data-bs-dismiss="modal">
+                          Confirmar
+                        </button>
 
                 </div>
               </div>

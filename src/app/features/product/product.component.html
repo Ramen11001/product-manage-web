@@ -15,9 +15,12 @@
                 <li>
                   <a class="dropdown-item" (click)="navigateToCreateProduct()">Crear Producto</a>
                 </li>
+                <li>
+                  <a class="dropdown-item" (click)="navigateToLogout()">Cerrar Sesión</a>
+                </li>
               </ul>
             </div>
-            <h2 class="fw-bold">Bienvenido al Dpto.</h2>
+            <h2 class="fw-bold">Bienvenido al Dpto. {{username}}</h2>
           </div>
         </div>
         <div class="col-md-6 position-relative">
@@ -44,9 +47,9 @@
               <h5 class="card-title">{{ product.name }}</h5>
               <p class="card-text text-black">
                 {{
-                product.description.length > 50
+                product.description ? (product.description.length > 50
                 ? product.description.substring(0, 50) + "..."
-                : product.description
+                : product.description) : 'Sin descripción'
                 }}
               </p>
               <p class="price"><strong>Precio:</strong> ${{ product.price }}</p>
@@ -58,7 +61,7 @@
                     Eliminar
                   </button>
                 </ng-container>
-                <!-- Modal de confirmación -->
+                <!-- Confirmation modal -->
                 <div class="modal fade" [id]="'deleteModal'+product.id" tabindex="-1">
                   <div class="modal-dialog">
                     <div class="modal-content">
@@ -79,6 +82,8 @@
                       </div>
                     </div>
                   </div>
+
+
                 </div>
               </div>
 
@@ -92,20 +97,22 @@
                 Producto </button>
 
             </div>
-          </div>
-
-          <div class="card-footer">
-            <div class="star-rating">
-              <ng-container *ngFor="let star of [1, 2, 3, 4, 5]; let i = index">
-                <i class="bi" [ngClass]="{
+            <div class="card-footer">
+              <div class="star-rating">
+                <ng-container *ngFor="let star of [1, 2, 3, 4, 5]; let i = index">
+                  <i class="bi" [ngClass]="{
                       'bi-star-fill': (product.averageRating ?? 0) > i,
                       'bi-star': (product.averageRating ?? 0) <= i,
                     }"></i>
-              </ng-container>
+                </ng-container>
+              </div>
             </div>
           </div>
+
+
         </div>
       </div>
+
     </div>
 
     <!-- Loading Template -->

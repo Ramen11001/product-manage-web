@@ -51,6 +51,16 @@ export class CreateProductComponent {
       description: ['', Validators.minLength(10)],
     });
   }
+
+/**
+   * Navigates to the product page.
+   * Uses Angular Router to navigate to '/product' route.
+   * @returns {void}
+   */
+  navigateToProduct() {
+    this.router.navigate(['/product']);
+  }
+
   /**
    * Handles form submission.
    * - Validates form inputs
