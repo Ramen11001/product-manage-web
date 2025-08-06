@@ -12,7 +12,7 @@ import { ProductsService } from 'src/app/core/services/products.service';
 import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-edit-product',
-  templateUrl: './editproduct.component.html',
+  templateUrl: './edit-product.component.html',
   standalone: true,
   imports: [ReactiveFormsModule, CommonModule],
 })

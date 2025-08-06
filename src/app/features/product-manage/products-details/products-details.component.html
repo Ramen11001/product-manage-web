@@ -95,7 +95,7 @@
               </ng-container>
             </div>
             <span class="text-gray-500 text-sm">
-              {{ comment.User.username || "Anónimo" }} 
+              {{ comment.User.username || "Anónimo" }}
               {{ comment.createdAt | date: "mediumDate" }}
             </span>
 
@@ -125,10 +125,10 @@
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                     Cancelar
                   </button>
-                   <button type="button" class="btn btn-danger" (click)="deleteComment(comment.id!)"
-                          data-bs-dismiss="modal">
-                          Confirmar
-                        </button>
+                  <button type="button" class="btn btn-danger" (click)="deleteComment(comment.id!)"
+                    data-bs-dismiss="modal">
+                    Confirmar
+                  </button>
 
                 </div>
               </div>

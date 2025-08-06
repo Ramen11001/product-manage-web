@@ -15,7 +15,7 @@ import { ProductsService } from 'src/app/core/services/products.service';
 @Component({
   selector: 'app-create-product',
   standalone: true,
-  templateUrl: './createProduct.component.html',
+  templateUrl: './create-product.component.html',
   imports: [CommonModule, ReactiveFormsModule, FormsModule],
 })
 export class CreateProductComponent {
@@ -52,7 +52,7 @@ export class CreateProductComponent {
     });
   }
 
-/**
+  /**
    * Navigates to the product page.
    * Uses Angular Router to navigate to '/product' route.
    * @returns {void}

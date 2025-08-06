@@ -61,10 +61,12 @@ export class CommentsService {
       fullCommentData.id = id;
     }
 
-     return this.http.post<Comment>(this.apiUrl, fullCommentData, {
-    params: { expand: 'user' }  // Añade este parámetro para incluir datos del usuario
-  }).pipe(catchError(this.handleError));
-}
+    return this.http
+      .post<Comment>(this.apiUrl, fullCommentData, {
+        params: { expand: 'user' },
+      })
+      .pipe(catchError(this.handleError));
+  }
 
   /**
    * Centralized error handling for HTTP requests.

@@ -1,11 +1,11 @@
 import { Routes } from '@angular/router';
 import { LoginComponent } from './features/login/login.component';
-import { authGuard } from './core/guards/auth.guard';
+import { authGuard } from './core/guards/auth-guard';
 import { ProductComponent } from './features/product/product.component';
-import { CreateProductComponent } from './features/productManage/createProduct/createProduct.component';
-import { EditProductComponent } from './features/productManage/edit-product/editproduct.component';
+import { CreateProductComponent } from './features/product-manage/create-product/create-product.component';
+import { EditProductComponent } from './features/product-manage/edit-product/edit-product.component';
 
-import { ProductsDetailsComponent } from './features/products-details/products-details.component';
+import { ProductsDetailsComponent } from './features/product-manage/products-details/products-details.component';
 /**
  * Defines the application routes and their associated components.
  *
@@ -23,7 +23,7 @@ export const routes: Routes = [
   {
     path: '',
     redirectTo: 'login',
-    pathMatch: 'full'
+    pathMatch: 'full',
   },
 
   /**
@@ -35,7 +35,7 @@ export const routes: Routes = [
    */
   {
     path: 'login',
-    component: LoginComponent
+    component: LoginComponent,
   },
   /**
    * Route for the product.
@@ -52,23 +52,23 @@ export const routes: Routes = [
     canActivate: [authGuard],
   },
   /**
-  * Route for the products Details.
-  * Displays the `ProductsDetailsComponent` after successful authentication.
-  *
-  * @route /productsDetails/:id
-  * @component ProductsDetailsComponent
-  */
+   * Route for the products Details.
+   * Displays the `ProductsDetailsComponent` after successful authentication.
+   *
+   * @route /productsDetails/:id
+   * @component ProductsDetailsComponent
+   */
   {
     path: 'productsDetails/:id',
     component: ProductsDetailsComponent,
   },
   /**
-  * Route for create a new product.
-  * Displays the `CreateProductComponent`.
-  *
-  * @route /createProduct
-  * @component CreateProductComponent
-  */
+   * Route for create a new product.
+   * Displays the `CreateProductComponent`.
+   *
+   * @route /createProduct
+   * @component CreateProductComponent
+   */
   {
     path: 'createProduct',
     component: CreateProductComponent,

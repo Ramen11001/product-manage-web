@@ -101,7 +101,7 @@ export class ProductsDetailsComponent implements OnInit {
         this.error = 'Error al cargar los comentarios';
         this.isLoading = false;
         console.error(err);
-      }
+      },
     });
   }
   /**
@@ -111,42 +111,42 @@ export class ProductsDetailsComponent implements OnInit {
    * - Resets form on success
    */
   onSubmit(): void {
-  if (this.commentForm.invalid || !this.product) return;
+    if (this.commentForm.invalid || !this.product) return;
 
-  if (!this.authService.isAuthenticated()) {
-    this.router.navigate(['/product']);
-    return;
+    if (!this.authService.isAuthenticated()) {
+      this.router.navigate(['/product']);
+      return;
+    }
+
+    const commentData = {
+      text: this.commentForm.value.text,
+      rating: Number(this.commentForm.value.rating),
+      productId: this.product.id,
+    };
+
+    this.commentsService.createComment(null, commentData).subscribe({
+      next: (comment) => {
+        // Si el backend no incluye el usuario, lo añadimos manualmente
+        if (!comment.User) {
+          comment.User = {
+            id: this.currentUserId!,
+            username: this.authService.getUsername() || 'Usuario actual',
+          };
+        }
+
+        this.comments.unshift(comment);
+        this.commentForm.reset({ text: '', rating: 5 });
+
+        // Elimina esta línea (ya no es necesaria):
+        // const productId = this.route.snapshot.paramMap.get('id');
+        // this.loadComments(parseInt(productId))
+      },
+      error: (err) => {
+        this.error = 'Error al enviar el comentario';
+        console.error(err);
+      },
+    });
   }
-
-  const commentData = {
-    text: this.commentForm.value.text,
-    rating: Number(this.commentForm.value.rating),
-    productId: this.product.id,
-  }
-
-  this.commentsService.createComment(null, commentData).subscribe({
-    next: (comment) => {
-      // Si el backend no incluye el usuario, lo añadimos manualmente
-      if (!comment.User) {
-        comment.User = {
-          id: this.currentUserId!,
-          username: this.authService.getUsername() || 'Usuario actual'
-        }; 
-      }
-      
-      this.comments.unshift(comment);
-      this.commentForm.reset({ text: '', rating: 5 });
-      
-      // Elimina esta línea (ya no es necesaria):
-      // const productId = this.route.snapshot.paramMap.get('id');
-      // this.loadComments(parseInt(productId))
-    },
-    error: (err) => {
-      this.error = 'Error al enviar el comentario';
-      console.error(err);
-    },
-  });
-}
   /**
    * Checks if user is authenticated.
    * @returns {boolean} Authentication status
@@ -185,5 +185,4 @@ export class ProductsDetailsComponent implements OnInit {
   navigateToProduct() {
     this.router.navigate(['/product']);
   }
-
 }
