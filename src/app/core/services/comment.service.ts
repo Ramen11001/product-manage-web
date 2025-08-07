@@ -27,10 +27,10 @@ export class CommentsService {
    * @returns {Observable<Comment[]>} Observable containing array of comments
    */
   getCommentsByProduct(productId: number): Observable<Comment[]> {
-  return this.http
-    .get<Comment[]>(`${this.apiUrl}/product/${productId}`)
-    .pipe(catchError(this.handleError));
-}
+    return this.http
+      .get<Comment[]>(`${this.apiUrl}/product/${productId}`)
+      .pipe(catchError(this.handleError));
+  }
 
   /**
    * Creates a comment.
@@ -45,7 +45,7 @@ export class CommentsService {
    */
   createComment(
     id: number | null,
-    commentData: Omit<Comment, 'userId' | 'id' | 'user'>,
+    commentData: Omit<Comment, 'userId' | 'id' | 'User'>,
   ): Observable<Comment> {
     const userId = this.authService.getCurrentUserId();
     if (!userId) {
@@ -62,7 +62,9 @@ export class CommentsService {
     }
 
     return this.http
-      .post<Comment>(this.apiUrl, fullCommentData)
+      .post<Comment>(this.apiUrl, fullCommentData, {
+        params: { expand: 'user' },
+      })
       .pipe(catchError(this.handleError));
   }
 

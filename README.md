@@ -20,7 +20,6 @@ Personal area where each user can:
 
 - View their published products
 - Check their posted comments
-- Edit personal information (name, email and password)
 
 ### Product Listing View
 
@@ -29,7 +28,6 @@ Displays all available products in card format showing:
 - Product name
 - Price
 - Average rating
-- Main image
 
 Includes:
 
@@ -43,7 +41,6 @@ Full-screen display with complete product information:
 
 - Full description
 - Exact price
-- Seller information
 - Publication date
 
 Comments section featuring:

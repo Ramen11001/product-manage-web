@@ -12,7 +12,7 @@ import { ProductsService } from 'src/app/core/services/products.service';
 import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-edit-product',
-  templateUrl: './editproduct.component.html',
+  templateUrl: './edit-product.component.html',
   standalone: true,
   imports: [ReactiveFormsModule, CommonModule],
 })
@@ -93,6 +93,15 @@ export class EditProductComponent {
   }
   showError(arg0: string) {
     throw new Error('Method not implemented.');
+  }
+
+  /**
+   * Navigates to the product page.
+   * Uses Angular Router to navigate to '/product' route.
+   * @returns {void}
+   */
+  navigateToProduct() {
+    this.router.navigate(['/product']);
   }
 
   /**

@@ -23,7 +23,7 @@ import { AuthService } from 'src/app/core/services/auth.service';
 export class ProductsDetailsComponent implements OnInit {
   product: Product | null = null;
   comments: Comment[] = [];
-  users: User[] = [];
+  user: User[] = [];
   commentForm: FormGroup;
   isLoading = true;
   error: string | null = null;
@@ -90,20 +90,20 @@ export class ProductsDetailsComponent implements OnInit {
    * @param {number} productId - ID of the product to load comments for
    */
   loadComments(productId: number): void {
-  this.isLoading = true;
-  
-  this.commentsService.getCommentsByProduct(productId).subscribe({
-    next: (comments) => {
-      this.comments = comments;
-      this.isLoading = false;
-    },
-    error: (err) => {
-      this.error = 'Error al cargar los comentarios';
-      this.isLoading = false;
-      console.error(err);
-    }
-  });
-}
+    this.isLoading = true;
+
+    this.commentsService.getCommentsByProduct(productId).subscribe({
+      next: (comments) => {
+        this.comments = comments;
+        this.isLoading = false;
+      },
+      error: (err) => {
+        this.error = 'Error al cargar los comentarios';
+        this.isLoading = false;
+        console.error(err);
+      },
+    });
+  }
   /**
    * Handles comment form submission.
    * - Validates form and authentication
@@ -122,10 +122,17 @@ export class ProductsDetailsComponent implements OnInit {
       text: this.commentForm.value.text,
       rating: Number(this.commentForm.value.rating),
       productId: this.product.id,
-    }
+    };
 
     this.commentsService.createComment(null, commentData).subscribe({
       next: (comment) => {
+        if (!comment.User) {
+          comment.User = {
+            id: this.currentUserId!,
+            username: this.authService.getUsername() || 'Usuario actual',
+          };
+        }
+
         this.comments.unshift(comment);
         this.commentForm.reset({ text: '', rating: 5 });
       },
@@ -173,5 +180,4 @@ export class ProductsDetailsComponent implements OnInit {
   navigateToProduct() {
     this.router.navigate(['/product']);
   }
-
 }

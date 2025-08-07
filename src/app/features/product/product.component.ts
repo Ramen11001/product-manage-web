@@ -66,10 +66,10 @@ export class ProductComponent implements OnInit {
    */
   hasMore = false;
   /**
-    * Current User.
-    *
-    * @type {number}
-    */
+   * Current User.
+   *
+   * @type {number}
+   */
   currentUserId: number | null = null;
 
   isLoading: boolean = true;
@@ -95,7 +95,7 @@ export class ProductComponent implements OnInit {
   constructor(
     private router: Router,
     private http: HttpClient,
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     const token = this.authService.getToken();
@@ -140,9 +140,9 @@ export class ProductComponent implements OnInit {
             const averageRating =
               ratings.length > 0
                 ? ratings.reduce(
-                  (sum: number, rating: number) => sum + rating,
-                  0,
-                ) / ratings.length
+                    (sum: number, rating: number) => sum + rating,
+                    0,
+                  ) / ratings.length
                 : 0;
             return { ...product, averageRating };
           });
@@ -187,10 +187,10 @@ export class ProductComponent implements OnInit {
   }
 
   /**
-     * Navigates to the product details page.
-     * Uses Angular Router to navigate to 'productsDetails/{id}' route.
-     * @returns {void}
-     */
+   * Navigates to the product details page.
+   * Uses Angular Router to navigate to 'productsDetails/{id}' route.
+   * @returns {void}
+   */
   navigateToDetailsProduct(id: number): void {
     this.router.navigate(['/productsDetails/' + id]);
   }
@@ -214,12 +214,16 @@ export class ProductComponent implements OnInit {
     this.router.navigate(['edit/' + id]);
   }
 
+  navigateToLogout(): void {
+    this.authService.logout();
+  }
+
   /**
    * Deletes a product by ID and updates local products list.
    * - Calls productService.deleteProduct() to delete from server
    * - On success, removes product from local products array
    * - Handles errors with console logging
-   * 
+   *
    * @param {number} id - ID of the product to delete
    * @returns {void}
    */
@@ -232,12 +236,12 @@ export class ProductComponent implements OnInit {
     this.productService.deleteProduct(id).subscribe({
       next: () => {
         // Update local products array by filtering out deleted product
-        this.products = this.products.filter(p => p.id !== id);
+        this.products = this.products.filter((p) => p.id !== id);
       },
       error: (err: any) => {
         console.error('Error deleting product:', err);
         // Optional error handling can be added here
-      }
+      },
     });
   }
 
@@ -256,6 +260,5 @@ export class ProductComponent implements OnInit {
     this.username = null;
     this.isLoading = false;
     this.router.navigate(['/login']);
-
   }
 }
