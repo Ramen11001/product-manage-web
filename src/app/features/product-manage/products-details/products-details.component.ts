@@ -136,10 +136,6 @@ export class ProductsDetailsComponent implements OnInit {
 
         this.comments.unshift(comment);
         this.commentForm.reset({ text: '', rating: 5 });
-
-        // Elimina esta línea (ya no es necesaria):
-        // const productId = this.route.snapshot.paramMap.get('id');
-        // this.loadComments(parseInt(productId))
       },
       error: (err) => {
         this.error = 'Error al enviar el comentario';
