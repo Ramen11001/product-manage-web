@@ -126,7 +126,6 @@ export class ProductsDetailsComponent implements OnInit {
 
     this.commentsService.createComment(null, commentData).subscribe({
       next: (comment) => {
-        // Si el backend no incluye el usuario, lo añadimos manualmente
         if (!comment.User) {
           comment.User = {
             id: this.currentUserId!,
